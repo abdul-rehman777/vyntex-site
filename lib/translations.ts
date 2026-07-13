@@ -736,9 +736,9 @@ const en = {
     },
     verify: {
       title: "Enter your code",
-      subtitle: "We sent a 6-digit code to {email}. It expires shortly.",
+      subtitle: "We sent a verification code to {email}. It expires shortly.",
       codeLabel: "Verification code",
-      codePlaceholder: "123456",
+      codePlaceholder: "12345678",
       submit: "Verify & continue",
       resend: "Resend code",
       resendIn: "Resend code in {seconds}s",
@@ -2049,9 +2049,9 @@ const es: Dict = {
     },
     verify: {
       title: "Ingresa tu código",
-      subtitle: "Enviamos un código de 6 dígitos a {email}. Expira pronto.",
+      subtitle: "Enviamos un código de verificación a {email}. Vence pronto.",
       codeLabel: "Código de verificación",
-      codePlaceholder: "123456",
+      codePlaceholder: "12345678",
       submit: "Verificar y continuar",
       resend: "Reenviar código",
       resendIn: "Reenviar código en {seconds}s",

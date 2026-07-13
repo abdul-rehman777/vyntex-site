@@ -14,7 +14,9 @@ function json(body: Result, status = 200) {
 
 const bodySchema = z.object({
   email: z.string().trim().email().max(180),
-  token: z.string().trim().regex(/^\d{6}$/),
+  token: z.string().trim().regex(/^\d{8}$/, {
+    message: "Verification code must contain exactly 8 digits.",
+  }),
 });
 
 export async function POST(request: Request) {

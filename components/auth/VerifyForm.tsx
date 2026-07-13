@@ -98,11 +98,11 @@ export default function VerifyForm({ email }: { email: string }) {
             id="otp-code"
             inputMode="numeric"
             autoComplete="one-time-code"
-            pattern="\d{6}"
-            maxLength={6}
+            pattern="[0-9]{8}"
+            maxLength={8}
             required
             value={code}
-            onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 8))}
             placeholder={t.auth.verify.codePlaceholder}
             className="w-full rounded-xl border border-[rgba(14,165,233,0.18)] bg-vx-bg py-2.5 pl-10 pr-3.5 text-center font-mono text-lg tracking-[0.4em] text-vx-ink placeholder:tracking-normal placeholder:text-vx-silver-dim focus-visible:border-vx-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vx-blue/40"
           />
@@ -120,7 +120,7 @@ export default function VerifyForm({ email }: { email: string }) {
         </p>
       ) : null}
 
-      <Button type="submit" variant="primary" fullWidth disabled={status === "verifying" || code.length !== 6}>
+      <Button type="submit" variant="primary" fullWidth disabled={status === "verifying" || code.length !== 8}>
         {status === "verifying" ? (
           <>
             <Loader2 size={16} className="animate-spin" aria-hidden />
