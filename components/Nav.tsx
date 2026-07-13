@@ -24,7 +24,7 @@ export default function Nav() {
   const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>(SECTION_IDS.home);
+  const [, setActive] = useState<string>(SECTION_IDS.home);
   const [authed, setAuthed] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
@@ -169,7 +169,6 @@ export default function Nav() {
         */}
         <ul className="hidden shrink-0 items-center gap-4 xl:flex 2xl:gap-6">
           {NAV_LINKS.map((link) => {
-            const id = SECTION_IDS[link.key];
             const isActive = false;
             return (
               <li key={link.key} className="shrink-0">

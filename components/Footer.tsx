@@ -7,7 +7,6 @@ import { useLang } from "@/context/LanguageContext";
 import {
   SITE,
   CONTACT_HREFS,
-  SECTION_IDS,
   LEGAL_LINKS,
 } from "@/lib/site";
 import Container from "@/components/ui/Container";
