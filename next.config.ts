@@ -8,19 +8,7 @@ const config: NextConfig = {
     remotePatterns: [],
   },
 
-  // Canonical is the apex domain (https://vyntexusa.com).
-  // Redirect the www subdomain to the apex. DNS/Vercel should also enforce this,
-  // but this guarantees correct behavior at the application layer.
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.vyntexusa.com" }],
-        destination: "https://vyntexusa.com/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  
 };
 
 export default config;
