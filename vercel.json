@@ -7,9 +7,9 @@
       "schedule": "0 7 * * *"
     },
     {
-      "path": "/api/cron/process-emails",
-      "schedule": "*/30 * * * *"
-    }
+  "path": "/api/cron/process-emails",
+  "schedule": "0 8 * * *"
+}
   ],
   "headers": [
     {
