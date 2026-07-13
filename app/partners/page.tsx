@@ -1,0 +1,1 @@
+import type{Metadata}from"next";import PartnersPage from"@/components/marketing/PartnersPage";export const metadata:Metadata={title:"Authorized Reseller Program | VYNTEX",description:"Apply for the VYNTEX authorized reseller program and expand your digital service offering."};export default function Page(){return <PartnersPage/>}

@@ -1,0 +1,1 @@
+import type {Metadata} from "next";import AboutPage from "@/components/marketing/AboutPage";export const metadata:Metadata={title:"About VYNTEX",description:"Learn how VYNTEX approaches websites, automation, CRM, branding, and digital technology for growing businesses."};export default function Page(){return <AboutPage/>}
