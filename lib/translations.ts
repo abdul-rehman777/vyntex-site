@@ -1658,12 +1658,12 @@ const es: Dict = {
         "Hosting, dominios, licencias, SMS, publicidad, plugins y costos de plataformas externas de terceros los cobra el proveedor por separado — no son parte de nuestra mano de obra.",
     },
     items: {
-      webBasic: {
+      BasicWebsite: {
         name: "Web Básica",
         tagline: "1–3 páginas. Sitio inicial ideal.",
         features: ["Diseño móvil", "Formulario de contacto", "Hosting en Cloudflare"],
       },
-      webStandard: {
+      StandardWebsite: {
         name: "Web Estándar",
         tagline: "5–7 páginas. Reservas, menú, SEO básico.",
         features: [
@@ -1673,17 +1673,17 @@ const es: Dict = {
           "Google Maps + reseñas",
         ],
       },
-      webCustom: {
+      CustomizedWebsite: {
         name: "Web a Medida",
         tagline: "Todo lo que va más allá del estándar.",
         features: ["Funciones y páginas a medida", "Integraciones avanzadas"],
       },
-      aiSimple: {
+      SimpleAiTool: {
         name: "Herramienta IA Simple",
         tagline: "Chatbot, calculadora o formulario.",
         features: ["Una herramienta con IA", "Alojado en Netlify", "Notificaciones por correo"],
       },
-      aiStandard: {
+      StandardAiAutomation: {
         name: "Automatización Estándar",
         tagline: "Captura de clientes + respuesta automática.",
         features: [
@@ -1692,17 +1692,17 @@ const es: Dict = {
           "Conectado a tus herramientas",
         ],
       },
-      aiAdvanced: {
+      AdvancedAi: {
         name: "Avanzado / A Medida",
         tagline: "Sistemas de IA complejos a medida.",
         features: ["Flujos de IA a medida", "Integraciones API", "Ajuste continuo"],
       },
-      crmBasic: {
+      CRMBasic: {
         name: "CRM Básico",
         tagline: "Sistema estándar. Contactos + embudo.",
         features: ["Contactos y embudo", "1 automatización", "Soporte continuo"],
       },
-      crmStandard: {
+      CRMStandard: {
         name: "CRM Estándar",
         tagline: "Prediseñado. Seguimiento automático.",
         features: [
@@ -1711,7 +1711,7 @@ const es: Dict = {
           "Hasta 3 automatizaciones",
         ],
       },
-      crmCustom: {
+      CRMCustomized: {
         name: "CRM a Medida",
         tagline: "Creado desde cero para tu flujo.",
         features: [
@@ -1720,17 +1720,17 @@ const es: Dict = {
           "Opción de compra total",
         ],
       },
-      brandLogo: {
+      BrandLogo: {
         name: "Logo",
         tagline: "Diseño de logo limpio y profesional.",
         features: ["2 conceptos", "Archivos finales (PNG/SVG)"],
       },
-      brandBundle: {
+      BrandBundle: {
         name: "Paquete de Marca",
         tagline: "Logo + tarjeta + volante.",
         features: ["Diseño de logo", "Tarjeta de presentación", "Diseño de volante"],
       },
-      brandKit: {
+      BrandKit: {
         name: "Kit de Marca Completo",
         tagline: "Colores, fuentes, plantillas, guía.",
         features: [
@@ -1739,12 +1739,12 @@ const es: Dict = {
           "Tarjeta + volante incluidos",
         ],
       },
-      socialSetup: {
+      SocialMediaSetup: {
         name: "Configuración de Redes",
         tagline: "Cuentas creadas y con marca (2 plataformas).",
         features: ["Perfil + imagen de marca", "Bio, enlaces, primeras publicaciones"],
       },
-      socialMgmt: {
+      SocialMediaManagement: {
         name: "Manejo de Redes",
         tagline: "Publicamos y manejamos por ti, mensual.",
         features: ["Contenido + programación", "Hasta 12 publicaciones/mes", "Reporte mensual"],
