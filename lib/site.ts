@@ -64,8 +64,6 @@ export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 export const NAV_LINKS: { key: keyof typeof SECTION_IDS; href: string }[] = [
   { key: "services", href: "/services" },
   { key: "howItWorks", href: "/how-it-works" },
-  { key: "aiAutomation", href: "/services/ai-automation" },
-  { key: "pricing", href: "/pricing" },
   { key: "industries", href: "/industries" },
   { key: "about", href: "/about" },
   { key: "partners", href: "/partners" },

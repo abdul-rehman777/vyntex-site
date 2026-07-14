@@ -345,12 +345,12 @@ const en = {
         "Third-party hosting, domains, licenses, SMS, advertising, plugins, and external platform costs are billed separately by the provider — they are not part of our labor.",
     },
     items: {
-      webBasic: {
+      BasicWebsite: {
         name: "Basic Website",
         tagline: "1–3 pages. Perfect starter site.",
         features: ["Mobile-ready design", "Contact form", "Hosting on Cloudflare"],
       },
-      webStandard: {
+      StandardWebsite: {
         name: "Standard Website",
         tagline: "5–7 pages. Booking, menu, SEO basics.",
         features: [
@@ -360,17 +360,17 @@ const en = {
           "Google Maps + reviews",
         ],
       },
-      webCustom: {
-        name: "Custom Website",
+      CustomizedWebsite: {
+        name: "Customized Website",
         tagline: "Anything beyond standard, built to spec.",
         features: ["Custom features & pages", "Advanced integrations"],
       },
-      aiSimple: {
+      SimpleAiTool: {
         name: "Simple AI Tool",
         tagline: "Chatbot, calculator, or intake form.",
         features: ["One AI-powered tool", "Netlify hosted", "Email notifications"],
       },
-      aiStandard: {
+      StandardAiAutomation: {
         name: "Standard Automation",
         tagline: "Lead capture + auto-response system.",
         features: [
@@ -379,17 +379,17 @@ const en = {
           "Connected to your tools",
         ],
       },
-      aiAdvanced: {
+      AdvancedAi: {
         name: "Advanced / Custom",
         tagline: "Complex AI systems, built to spec.",
         features: ["Custom AI workflows", "API integrations", "Ongoing tuning"],
       },
-      crmBasic: {
+      CRMBasic: {
         name: "Basic CRM",
         tagline: "Standard system. Contacts + pipeline.",
         features: ["Contacts & pipeline", "1 automation", "Ongoing support"],
       },
-      crmStandard: {
+      CRMStandard: {
         name: "Standard CRM",
         tagline: "Pre-built. Follow-up on autopilot.",
         features: [
@@ -398,8 +398,8 @@ const en = {
           "Up to 3 automations",
         ],
       },
-      crmCustom: {
-        name: "Custom CRM",
+      CRMCustomized: {
+        name: "Customized CRM",
         tagline: "Built from scratch for your workflow.",
         features: [
           "Fully custom build",
@@ -407,17 +407,17 @@ const en = {
           "One-time buyout option",
         ],
       },
-      brandLogo: {
-        name: "Logo",
+      BrandLogo: {
+        name: "Brand Logo",
         tagline: "Clean, professional logo design.",
         features: ["2 concepts", "Final files (PNG/SVG)"],
       },
-      brandBundle: {
+      BrandBundle: {
         name: "Brand Bundle",
         tagline: "Logo + business card + flyer.",
         features: ["Logo design", "Business card", "Flyer design"],
       },
-      brandKit: {
+      BrandKit: {
         name: "Full Brand Kit",
         tagline: "Colors, fonts, templates, guidelines.",
         features: [
@@ -426,13 +426,13 @@ const en = {
           "Card + flyer included",
         ],
       },
-      socialSetup: {
-        name: "Social Setup",
+      SocialMediaSetup: {
+        name: "Social Media Setup",
         tagline: "Accounts created & branded (2 platforms).",
         features: ["Profile setup + branding", "Bio, links, first posts"],
       },
-      socialMgmt: {
-        name: "Social Management",
+      SocialMediaManagement: {
+        name: "Social Media Management",
         tagline: "We post and manage for you, monthly.",
         features: ["Content + scheduling", "Up to 12 posts/mo", "Monthly report"],
       },
