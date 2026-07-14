@@ -403,11 +403,13 @@ ${row("Services of interest", services)}
 ${row("Resell model", RESELL_MODEL_LABELS.en[d.resellModel] ?? d.resellModel)}
 ${row("Language", d.language.toUpperCase())}
 </table>
-<div style="margin-top:16px;padding:14px;background:#F9FAFB;border-radius:8px;font-size:13px;color:#111827;white-space:pre-wrap;">${esc(d.message)}</div>
-<div style="margin-top:16px;padding:12px;background:#EFF6FF;border-radius:8px;font-size:12px;color:#1E3A8A;">
-To approve: the applicant must sign in once (email OTP) so an auth user exists, then run
-<code>select * from public.vx_approve_reseller_application('&lt;application-id&gt;', '&lt;auth-user-id&gt;');</code>
-in the Supabase SQL editor. Approval does NOT unlock wholesale pricing — the partner must still sign the agreement and pay the activation.
+<div style="margin-top:16px;padding:14px;background:#F9FAFB;border-radius:8px;font-size:14px;line-height:1.6;color:#111827;">
+  <strong>Application review required</strong>
+  <p style="margin:8px 0 0;">
+    Review the applicant’s information in the VYNTEX admin portal. If approved,
+    send the partner agreement and activation instructions. Wholesale pricing
+    should remain locked until all onboarding requirements are completed.
+  </p>
 </div>`,
     `New reseller application from ${d.businessName}`,
   );
@@ -425,7 +427,11 @@ Resell model: ${RESELL_MODEL_LABELS.en[d.resellModel] ?? d.resellModel}
 Language: ${d.language}
 
 Message:
-${d.message}`;
+
+${d.message}
+
+Next step:
+Review the application in the VYNTEX admin portal. If approved, send the partner agreement and activation instructions. Wholesale pricing remains locked until all onboarding requirements are completed.`;
 
   return { subject, html, text };
 }
