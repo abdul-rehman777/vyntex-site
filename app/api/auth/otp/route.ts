@@ -40,30 +40,29 @@ export async function POST(request: Request) {
   if (!rl.success) return json({ ok: false, code: "tooManyRequests" }, 429);
 
   let supabase;
-  try {
-    supabase = await getSupabaseServerClient();
-  } catch {
-    return json({ ok: false, code: "generic" }, 500);
-  }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
+try {
+  supabase = await getSupabaseServerClient();
+} catch {
+  return json({ ok: false, code: "generic" }, 500);
+}
 
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: true,
-      emailRedirectTo: `${siteUrl}/auth/callback`,
-    },
-  });
+const { error } = await supabase.auth.signInWithOtp({
+  email,
+  options: {
+    shouldCreateUser: true,
+  },
+});
 
-  if (error) {
-    console.error("[auth/otp] signInWithOtp failed:", error.message);
-    // Supabase enforces its own per-email cooldown; surface as rate limit.
-    const code = /rate|too many|seconds/i.test(error.message)
-      ? "tooManyRequests"
-      : "otpFailed";
-    return json({ ok: false, code }, 400);
-  }
+if (error) {
+  console.error("[auth/otp] signInWithOtp failed:", error.message);
 
-  return json({ ok: true });
+  const code = /rate|too many|seconds/i.test(error.message)
+    ? "tooManyRequests"
+    : "otpFailed";
+
+  return json({ ok: false, code }, 400);
+}
+
+return json({ ok: true });
 }
