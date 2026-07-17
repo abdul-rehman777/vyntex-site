@@ -6,8 +6,10 @@ import { useReducedMotion } from "framer-motion";
  * Common easings for VYNTEX motion language.
  */
 export const ease = {
-  // Smooth, sophisticated enterprise curve
-  smooth: [0.25, 0.1, 0.25, 1.0],
+  // Canonical VYNTEX ease-out. Single source of truth shared by page
+  // transitions (app/template.tsx) and section reveals so the whole live site
+  // moves on one rhythm. Mirrors the homepage token in components/home/motion.ts.
+  smooth: [0.22, 1, 0.36, 1],
   // Snappy but not bouncy (for UI elements)
   snappy: [0.17, 0.67, 0.83, 0.67],
   // Restrained spring-like feel using cubic-bezier
