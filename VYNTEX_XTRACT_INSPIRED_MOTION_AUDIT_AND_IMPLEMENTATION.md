@@ -262,3 +262,55 @@ the word-reveal timing and hero parallax on a preview deploy.
 **Marketing-hero reveals (optional follow-up):** if you later want the same headline reveal on
 `/about`, `/services`, etc. without the framer-motion cost, I can ship a CSS + IntersectionObserver
 variant of `RevealText` (no motion library) so those routes stay light. Say the word.
+
+---
+
+## Addendum 2 — Reference-driven hero depth + honest scope reconciliation
+
+**Reference set reviewed:** 16 screenshots (Nexux/Xtract/Prism-style AI-agency templates).
+
+**Hard constraint honored — no fabricated proof.** Several references sell their "wow" with
+fabricated dashboards (e.g. "$53,000", "95% satisfaction", "Mark Johnson"), invented case-study
+metrics ("40% less inventory waste"), placeholder logos ("Logoipsum"), and invented pricing. VYNTEX's
+non-negotiable rules forbid inventing dashboards, statistics, testimonials, results, or logos, so
+none were reproduced. The *motion quality and visual energy* are matched using VYNTEX's real modules
+(CRM, Messages, Appointments, Automation, Website, Payments, Marketing, Reports) and honest states.
+
+**Custom/"magnetic" cursor — already present, verified.** `components/ui/MagneticCursor.tsx` is wired
+in `app/layout.tsx` site-wide: an additive ring that trails the pointer and reacts to interactive
+targets, plus magnetic pull on `[data-magnetic]` elements (the hero CTAs). It never hides the native
+cursor, is disabled on `(pointer: coarse)` and `prefers-reduced-motion`, and pauses when the tab is
+hidden. No change needed.
+
+**Hero — already un-boxed + animated in code (ahead of the deployed screenshot).** The current
+`components/home/ConnectedHero.tsx` already renders a centered lead + an un-boxed stage
+(`.hero-system-stage--open`), per-word headline reveal (`RevealText`), scroll parallax, magnetic
+CTAs, path-draw, and **flowing data pulses** (`<animateMotion>` dots traveling each connection into
+the core, `.hero-pulse`, hidden under reduced motion). The boxed hero in the uploaded screenshot is
+an older build.
+
+**Added this pass — 3D pointer depth on the hero stage.** New `.hero-tilt` layer with a scoped,
+fine-pointer-only pointer handler that maps cursor position to a restrained ±5° `rotateX/rotateY`
+(CSS-variable driven, smoothed), giving the "3D/interactive" feel from the references. Flattened on
+touch and under reduced motion.
+- Files: `components/home/ConnectedHero.tsx` (tiltRef + effect + `.hero-tilt` wrapper),
+  `app/globals.css` (`.hero-tilt` rules + reduced-motion/touch flatten).
+- Bundle: homepage 13.5 → **13.9 kB** route; shared **102 kB** unchanged.
+
+**Scope reconciliation (what the 7 requests map to):**
+- #1 Cinematic hero — un-boxed/centered/pulses already in code; **3D tilt added** this pass. ✔
+- #2 Magnetic cursor site-wide — already integrated & verified. ✔
+- #3 "Capabilities constellation" (ref image 3) — the hero **is** a labeled-module constellation
+  around a VYNTEX core; adding a second one would duplicate and clutter, which the brief forbids.
+- #5 CRM/workflow motion (ref 10/11) — `WorkflowDemo` + `ImplementationProcess` already present.
+- #6 Services on home (ref 7/8/9) — `ServiceSystems` already present.
+- #7 Value-add motion (ref 13) — `BeforeAfterSystem` already present.
+- #4 Dual animated cards (ref 4) — the only genuinely net-new section. Would be built as two honest
+  cards (e.g. an animated pipeline + an animated message thread) with **no** fabricated numbers.
+  Deferred pending review to avoid clutter and because new sections need live QA to be "flawless."
+
+**Honest limitation (unchanged):** no browser/Lighthouse in this sandbox. The 3D tilt, pulses, and
+cursor should be confirmed on a Vercel preview; timing (±5° feel, pulse cadence) is easy to tune once
+seen. This is why unverified extra sections were not dumped in and called "flawless."
+
+**Gates:** typecheck PASS · lint PASS · tests **94/94** · `next build` clean.

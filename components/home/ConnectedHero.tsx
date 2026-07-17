@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
@@ -33,14 +33,14 @@ const moduleIcons = [
 ] as const;
 
 const modulePositions = [
-  "left-[3%] top-[12%]",
-  "left-[29%] top-[4%]",
-  "right-[28%] top-[4%]",
-  "right-[3%] top-[12%]",
-  "left-[3%] bottom-[12%]",
-  "left-[29%] bottom-[4%]",
-  "right-[28%] bottom-[4%]",
-  "right-[3%] bottom-[12%]",
+  "left-[2%] top-[11%]",
+  "left-[28%] top-[2%]",
+  "right-[27%] top-[2%]",
+  "right-[2%] top-[11%]",
+  "left-[2%] bottom-[11%]",
+  "left-[28%] bottom-[2%]",
+  "right-[27%] bottom-[2%]",
+  "right-[2%] bottom-[11%]",
 ] as const;
 
 const copy = {
@@ -77,10 +77,44 @@ export default function ConnectedHero() {
   const [run, setRun] = useState(0);
   const play = reduceMotion || inView;
 
-  // Subtle scroll-linked parallax on the visual stage (Nexaro-style scroll
-  // effect), molded to VYNTEX: GPU transform only, and flat under reduced motion.
+  // Subtle scroll-linked parallax on the visual (GPU transform; flat under
+  // reduced motion).
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const stageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [34, -34]);
+  const stageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [30, -30]);
+
+  // Restrained pointer-driven 3D depth on the stage. Scoped to the stage element,
+  // fine-pointer only, and inert under reduced motion. Sets CSS vars consumed by
+  // `.hero-tilt` in globals.css (which flattens on touch / reduced motion).
+  const tiltRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (reduceMotion) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    const el = tiltRef.current;
+    if (!el) return;
+    let raf = 0;
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      const nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2)));
+      const ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2)));
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty("--tilt-y", `${nx * 5}deg`);
+        el.style.setProperty("--tilt-x", `${-ny * 5}deg`);
+      });
+    };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      el.style.setProperty("--tilt-x", "0deg");
+      el.style.setProperty("--tilt-y", "0deg");
+    };
+    el.addEventListener("pointermove", onMove, { passive: true });
+    el.addEventListener("pointerleave", onLeave);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", onLeave);
+    };
+  }, [reduceMotion]);
 
   const paths = useMemo(
     () => [
@@ -97,63 +131,66 @@ export default function ConnectedHero() {
   );
 
   return (
-    <section id="home" className="relative overflow-hidden pb-16 pt-[116px] sm:pb-20 sm:pt-[136px]">
+    <section id="home" className="relative overflow-hidden pb-16 pt-[124px] sm:pb-20 sm:pt-[150px]">
       <div className="hero-atmosphere" aria-hidden />
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          <div className="relative z-10 max-w-2xl">
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: motionTokens.ease }}
-              className="font-mono text-xs uppercase tracking-[0.22em] text-vx-cyan"
-            >
-              {c.eyebrow}
-            </motion.p>
+        {/* Centered lead */}
+        <div className="mx-auto max-w-3xl text-center">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: motionTokens.ease }}
+            className="font-mono text-xs uppercase tracking-[0.24em] text-vx-cyan"
+          >
+            {c.eyebrow}
+          </motion.p>
 
-            <div className="mt-5 overflow-hidden pb-1">
-              <RevealText
-                as="h1"
-                text={c.title}
-                trigger="mount"
-                delay={0.08}
-                className="text-4xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[4.45rem]"
-              />
-            </div>
-
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.18, ease: motionTokens.ease }}
-              className="mt-6 max-w-xl text-base leading-7 text-vx-muted sm:text-lg sm:leading-8"
-            >
-              {c.body}
-            </motion.p>
-
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.28, ease: motionTokens.ease }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
-            >
-              <Button onClick={openConsultation} size="lg">
-                {c.primary}<ArrowRight size={18} aria-hidden />
-              </Button>
-              <Button href="/services" variant="secondary" size="lg">{c.secondary}</Button>
-            </motion.div>
+          <div className="mt-5 overflow-hidden pb-1">
+            <RevealText
+              as="h1"
+              text={c.title}
+              trigger="mount"
+              delay={0.08}
+              className="text-4xl font-extrabold leading-[1.03] tracking-[-0.05em] sm:text-6xl lg:text-[4.35rem]"
+            />
           </div>
 
-          <div ref={ref} className="relative mx-auto w-full max-w-[680px]">
-            <motion.div style={{ y: stageY }} className="will-change-transform">
+          <motion.p
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.18, ease: motionTokens.ease }}
+            className="mx-auto mt-6 max-w-2xl text-base leading-7 text-vx-muted sm:text-lg sm:leading-8"
+          >
+            {c.body}
+          </motion.p>
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.28, ease: motionTokens.ease }}
+            className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
+          >
+            <Button onClick={openConsultation} size="lg" data-magnetic="true">
+              {c.primary}
+              <ArrowRight size={18} aria-hidden />
+            </Button>
+            <Button href="/services" variant="secondary" size="lg" data-magnetic="true">
+              {c.secondary}
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* Connected-system visual (un-boxed, centered below the lead) */}
+        <div ref={ref} className="relative mx-auto mt-14 w-full max-w-[760px] sm:mt-16">
+          <motion.div style={{ y: stageY }} className="will-change-transform">
+            <div ref={tiltRef} className="hero-tilt">
             <motion.div
               key={run}
-              className="hero-system-stage"
+              className="hero-system-stage hero-system-stage--open"
               initial={reduceMotion ? false : { opacity: 0, scale: 0.975, y: 18 }}
               animate={play ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.975, y: 18 }}
               transition={{ duration: 0.7, ease: motionTokens.ease }}
             >
-              <div className="hero-stage-sheen" aria-hidden />
-
               <svg className="absolute inset-0 h-full w-full" viewBox="0 0 684 540" aria-hidden="true">
                 <defs>
                   <linearGradient id="hero-path-premium" x1="0" y1="0" x2="1" y2="1">
@@ -176,6 +213,23 @@ export default function ConnectedHero() {
                     />
                   </g>
                 ))}
+                {/* Flowing data pulses: each dot travels its connection into the core */}
+                {!reduceMotion
+                  ? paths.map((d, index) => (
+                      <circle key={`pulse-${d}`} className="hero-pulse" r="3.2" fill="#22d3ee">
+                        <animateMotion
+                          dur="2.6s"
+                          begin={`${0.7 + index * 0.14}s`}
+                          repeatCount="indefinite"
+                          path={d}
+                          keyPoints="0;1"
+                          keyTimes="0;1"
+                          calcMode="spline"
+                          keySplines="0.4 0 0.2 1"
+                        />
+                      </circle>
+                    ))
+                  : null}
               </svg>
 
               {c.modules.map((label, index) => {
@@ -188,7 +242,9 @@ export default function ConnectedHero() {
                     animate={play ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.94, y: 10 }}
                     transition={{ duration: 0.42, delay: reduceMotion ? 0 : 0.16 + index * 0.055, ease: motionTokens.ease }}
                   >
-                    <span className="hero-module-icon"><Icon size={17} aria-hidden /></span>
+                    <span className="hero-module-icon">
+                      <Icon size={17} aria-hidden />
+                    </span>
                     <span>{label}</span>
                     <motion.span
                       className="hero-module-status"
@@ -212,7 +268,9 @@ export default function ConnectedHero() {
                   animate={reduceMotion ? undefined : { rotate: 360 }}
                   transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
                 />
-                <span className="hero-core-mark"><Workflow size={30} aria-hidden /></span>
+                <span className="hero-core-mark">
+                  <Workflow size={30} aria-hidden />
+                </span>
                 <strong>VYNTEX</strong>
                 <small>{c.connected}</small>
               </motion.div>
@@ -223,22 +281,24 @@ export default function ConnectedHero() {
                 animate={play ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
                 transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.36 }}
               >
-                <Globe2 size={14} aria-hidden />{c.inquiry}
+                <Globe2 size={14} aria-hidden />
+                {c.inquiry}
               </motion.div>
             </motion.div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {!reduceMotion ? (
-              <button
-                type="button"
-                onClick={() => setRun((value) => value + 1)}
-                className="mx-auto mt-4 inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs text-vx-muted transition-colors hover:text-vx-ink"
-                aria-label={c.replay}
-              >
-                <RefreshCw size={14} aria-hidden />{c.replay}
-              </button>
-            ) : null}
-          </div>
+          {!reduceMotion ? (
+            <button
+              type="button"
+              onClick={() => setRun((value) => value + 1)}
+              className="mx-auto mt-4 flex items-center gap-2 rounded-full px-3 py-2 text-xs text-vx-muted transition-colors hover:text-vx-ink"
+              aria-label={c.replay}
+            >
+              <RefreshCw size={14} aria-hidden />
+              {c.replay}
+            </button>
+          ) : null}
         </div>
       </Container>
     </section>

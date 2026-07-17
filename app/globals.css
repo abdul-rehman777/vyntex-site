@@ -770,3 +770,61 @@
   .site-atmosphere *::before,
   .site-atmosphere *::after { animation: none !important; }
 }
+
+/* --------------------------------------------------------------------------
+   VYNTEX magnetic cursor accent (desktop, fine-pointer, motion-safe only)
+   The native cursor is never hidden — this is a decorative follower + the
+   [data-magnetic] pull target styling.
+   -------------------------------------------------------------------------- */
+.vx-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid rgba(34, 211, 238, 0.55);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.06);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+.vx-cursor[data-hover="true"] {
+  border-color: rgba(56, 189, 248, 0.9);
+  background: rgba(56, 189, 248, 0.1);
+}
+[data-magnetic] {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .vx-cursor { display: none !important; }
+  [data-magnetic] { transition: none !important; transform: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   Open (un-boxed) hero stage variant + flowing data pulses
+   -------------------------------------------------------------------------- */
+.hero-system-stage--open {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  min-height: 460px;
+}
+.hero-system-stage--open::after { inset: 6%; }
+.hero-pulse { filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.8)); }
+
+.hero-tilt {
+  transform: perspective(1200px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .hero-pulse { display: none; }
+  .hero-tilt { transform: none !important; transition: none !important; }
+}

@@ -4,6 +4,7 @@ import { SITE } from "@/lib/site";
 import { siteJsonLd } from "@/lib/schema";
 import { LanguageProvider } from "@/context/LanguageContext";
 import SiteAtmosphere from "@/components/SiteAtmosphere";
+import MagneticCursor from "@/components/ui/MagneticCursor";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -95,6 +96,7 @@ export default function RootLayout({
       <body className="min-h-screen font-sans text-vx-ink antialiased">
         <LanguageProvider>
           <SiteAtmosphere />
+          <MagneticCursor />
           <div className="site-content">{children}</div>
         </LanguageProvider>
       </body>
