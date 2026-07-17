@@ -227,10 +227,7 @@ export default function Nav() {
             size="sm"
             className="shrink-0"
           >
-            {t.actions.bookCall}
-          </Button>
-          <Button href="/checkout" variant="primary" size="sm" className="shrink-0">
-            {t.actions.getStarted}
+            {t.actions.bookConsultation}
           </Button>
         </div>
 
@@ -306,15 +303,7 @@ export default function Nav() {
                 openConsultation();
               }}
             >
-              {t.actions.bookCall}
-            </Button>
-            <Button
-              href="/checkout"
-              variant="primary"
-              fullWidth
-              onClick={() => setOpen(false)}
-            >
-              {t.actions.getStarted}
+              {t.actions.bookConsultation}
             </Button>
             {authed ? <LogoutButton className="w-full justify-center" /> : null}
           </div>

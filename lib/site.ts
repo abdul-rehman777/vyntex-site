@@ -47,6 +47,7 @@ export const CONTACT_HREFS = {
 /** Primary multi-page navigation. */
 export const SECTION_IDS = {
   home: "home",
+  solutions: "solutions",
   services: "services",
   howItWorks: "how-it-works",
   aiAutomation: "ai-automation",
@@ -62,11 +63,12 @@ export const SECTION_IDS = {
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 
 export const NAV_LINKS: { key: keyof typeof SECTION_IDS; href: string }[] = [
+  { key: "solutions", href: "/#solutions" },
   { key: "services", href: "/services" },
-  { key: "howItWorks", href: "/how-it-works" },
   { key: "industries", href: "/industries" },
-  { key: "about", href: "/about" },
+  { key: "pricing", href: "/pricing" },
   { key: "partners", href: "/partners" },
+  { key: "about", href: "/about" },
   { key: "contact", href: "/contact" },
 ];
 

@@ -44,6 +44,7 @@ const en = {
 
   nav: {
     home: "Home",
+    solutions: "Solutions",
     services: "Services",
     howItWorks: "How It Works",
     aiAutomation: "AI Automation",
@@ -816,7 +817,7 @@ const en = {
 
 
   footer: {
-    tagline: "AI Automation · Web Development · Digital Technology",
+    tagline: "Connected business systems, CRM implementation, automation, websites, and digital solutions.",
     servicesHeading: "Services",
     companyHeading: "Company",
     contactHeading: "Contact",
@@ -1357,6 +1358,7 @@ const es: Dict = {
 
   nav: {
     home: "Inicio",
+    solutions: "Soluciones",
     services: "Servicios",
     howItWorks: "Cómo Funciona",
     aiAutomation: "Automatización IA",
@@ -2129,7 +2131,7 @@ const es: Dict = {
 
 
   footer: {
-    tagline: "Automatización IA · Desarrollo Web · Tecnología Digital",
+    tagline: "Sistemas empresariales conectados, implementación de CRM, automatización, sitios web y soluciones digitales.",
     servicesHeading: "Servicios",
     companyHeading: "Empresa",
     contactHeading: "Contacto",
