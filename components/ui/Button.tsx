@@ -87,7 +87,7 @@ export default function Button(props: ButtonProps) {
       href: string;
     };
     return (
-      <Link href={href} className={classes} {...anchorRest}>
+      <Link href={href} className={classes} data-magnetic="true" {...anchorRest}>
         {children}
       </Link>
     );
@@ -95,7 +95,7 @@ export default function Button(props: ButtonProps) {
 
   const buttonRest = rest as ComponentPropsWithoutRef<"button">;
   return (
-    <button className={classes} {...buttonRest}>
+    <button className={classes} data-magnetic="true" {...buttonRest}>
       {children}
     </button>
   );

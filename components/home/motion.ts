@@ -7,7 +7,6 @@ export const motionTokens = {
     reveal: 0.55,
     sequence: 2.4,
   },
-  // Canonical VYNTEX ease-out (mirrors `ease.smooth` in lib/motion.ts).
   ease: [0.22, 1, 0.36, 1] as const,
   spring: { type: "spring", stiffness: 180, damping: 24, mass: 0.8 } as Transition,
   stagger: 0.09,

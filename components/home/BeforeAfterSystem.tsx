@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, CheckCircle2, CreditCard, Mail, Network, RefreshCcw, Users } from "lucide-react";
 import Container from "@/components/ui/Container";
-import RevealText from "@/components/ui/RevealText";
 import Button from "@/components/ui/Button";
 import { openConsultation } from "@/components/BookConsultation";
 import { useLang } from "@/context/LanguageContext";
@@ -42,7 +41,7 @@ export default function BeforeAfterSystem() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
-          <RevealText as="h2" text={c.title} className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl" />
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
         </div>
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           <motion.article className="comparison-panel comparison-panel-before" variants={revealVariants} initial={reduceMotion ? "visible" : "hidden"} whileInView="visible" viewport={{ once: true, amount: 0.25 }}>

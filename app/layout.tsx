@@ -4,7 +4,7 @@ import { SITE } from "@/lib/site";
 import { siteJsonLd } from "@/lib/schema";
 import { LanguageProvider } from "@/context/LanguageContext";
 import SiteAtmosphere from "@/components/SiteAtmosphere";
-import MagneticCursor from "@/components/ui/MagneticCursor";
+import MagneticCursor from "@/components/MagneticCursor";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {

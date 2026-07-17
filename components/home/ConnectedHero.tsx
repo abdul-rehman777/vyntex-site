@@ -1,47 +1,27 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
+  BellRing,
   CalendarDays,
+  CheckCircle2,
   CreditCard,
+  FileText,
   Globe2,
-  Megaphone,
+  LayoutDashboard,
   MessageSquareText,
-  RefreshCw,
+  TrendingUp,
   Users,
   Workflow,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import RevealText from "@/components/ui/RevealText";
 import { openConsultation } from "@/components/BookConsultation";
 import { useLang } from "@/context/LanguageContext";
 import { motionTokens } from "@/components/home/motion";
-
-const moduleIcons = [
-  Users,
-  MessageSquareText,
-  CalendarDays,
-  Workflow,
-  Globe2,
-  CreditCard,
-  Megaphone,
-  BarChart3,
-] as const;
-
-const modulePositions = [
-  "left-[2%] top-[11%]",
-  "left-[28%] top-[2%]",
-  "right-[27%] top-[2%]",
-  "right-[2%] top-[11%]",
-  "left-[2%] bottom-[11%]",
-  "left-[28%] bottom-[2%]",
-  "right-[27%] bottom-[2%]",
-  "right-[2%] bottom-[11%]",
-] as const;
 
 const copy = {
   en: {
@@ -50,10 +30,13 @@ const copy = {
     body: "VYNTEX connects your CRM, customer communication, scheduling, payments, automation, website, marketing, and reporting into one organized business system.",
     primary: "Book Consultation",
     secondary: "View Services",
-    modules: ["CRM", "Messages", "Appointments", "Automation", "Website", "Payments", "Marketing", "Reports"],
-    inquiry: "Website inquiry received",
-    connected: "Connected workflow active",
-    replay: "Replay connection sequence",
+    labels: ["CRM", "Communication", "Scheduling", "Payments", "Automation", "Reporting"],
+    dashboard: "Connected Operations",
+    status: "Workflow active",
+    lead: "New website inquiry",
+    customer: "Customer record created",
+    appointment: "Appointment confirmed",
+    payment: "Payment recorded",
   },
   es: {
     eyebrow: "SISTEMAS EMPRESARIALES CONECTADOS",
@@ -61,245 +44,187 @@ const copy = {
     body: "VYNTEX conecta su CRM, comunicación con clientes, citas, pagos, automatización, sitio web, marketing y reportes en un sistema empresarial organizado.",
     primary: "Reservar una Consulta",
     secondary: "Ver Servicios",
-    modules: ["CRM", "Mensajes", "Citas", "Automatización", "Sitio Web", "Pagos", "Marketing", "Reportes"],
-    inquiry: "Consulta web recibida",
-    connected: "Flujo conectado activo",
-    replay: "Repetir secuencia de conexión",
+    labels: ["CRM", "Comunicación", "Citas", "Pagos", "Automatización", "Reportes"],
+    dashboard: "Operaciones Conectadas",
+    status: "Flujo activo",
+    lead: "Nueva consulta web",
+    customer: "Registro de cliente creado",
+    appointment: "Cita confirmada",
+    payment: "Pago registrado",
   },
 } as const;
+
+const labelIcons = [Users, MessageSquareText, CalendarDays, CreditCard, Workflow, BarChart3] as const;
 
 export default function ConnectedHero() {
   const { lang } = useLang();
   const c = copy[lang];
   const reduceMotion = useReducedMotion() === true;
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.28 });
-  const [run, setRun] = useState(0);
-  const play = reduceMotion || inView;
-
-  // Subtle scroll-linked parallax on the visual (GPU transform; flat under
-  // reduced motion).
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const stageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [30, -30]);
-
-  // Restrained pointer-driven 3D depth on the stage. Scoped to the stage element,
-  // fine-pointer only, and inert under reduced motion. Sets CSS vars consumed by
-  // `.hero-tilt` in globals.css (which flattens on touch / reduced motion).
-  const tiltRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (reduceMotion) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    const el = tiltRef.current;
-    if (!el) return;
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      const nx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width / 2)));
-      const ny = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height / 2)));
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        el.style.setProperty("--tilt-y", `${nx * 5}deg`);
-        el.style.setProperty("--tilt-x", `${-ny * 5}deg`);
-      });
-    };
-    const onLeave = () => {
-      cancelAnimationFrame(raf);
-      el.style.setProperty("--tilt-x", "0deg");
-      el.style.setProperty("--tilt-y", "0deg");
-    };
-    el.addEventListener("pointermove", onMove, { passive: true });
-    el.addEventListener("pointerleave", onLeave);
-    return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener("pointermove", onMove);
-      el.removeEventListener("pointerleave", onLeave);
-    };
-  }, [reduceMotion]);
-
-  const paths = useMemo(
-    () => [
-      "M120 215 C190 215 230 270 342 270",
-      "M265 95 C290 160 310 220 342 270",
-      "M420 95 C395 160 375 220 342 270",
-      "M565 215 C495 215 455 270 342 270",
-      "M120 330 C190 330 230 285 342 270",
-      "M265 445 C290 380 310 320 342 270",
-      "M420 445 C395 380 375 320 342 270",
-      "M565 330 C495 330 455 285 342 270",
-    ],
-    [],
-  );
+  const visualRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(visualRef, { once: true, amount: 0.18 });
 
   return (
-    <section id="home" className="relative overflow-hidden pb-16 pt-[124px] sm:pb-20 sm:pt-[150px]">
-      <div className="hero-atmosphere" aria-hidden />
+    <section id="home" className="vx-hero relative overflow-hidden pb-20 pt-[118px] sm:pb-24 sm:pt-[138px]">
+      <div className="vx-hero-lightfield" aria-hidden="true">
+        <span className="vx-lightstream vx-lightstream-a" />
+        <span className="vx-lightstream vx-lightstream-b" />
+        <span className="vx-lightstream vx-lightstream-c" />
+      </div>
+
       <Container>
-        {/* Centered lead */}
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
           <motion.p
-            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: motionTokens.ease }}
+            transition={{ duration: 0.42, ease: motionTokens.ease }}
             className="font-mono text-xs uppercase tracking-[0.24em] text-vx-cyan"
           >
             {c.eyebrow}
           </motion.p>
 
-          <div className="mt-5 overflow-hidden pb-1">
-            <RevealText
-              as="h1"
-              text={c.title}
-              trigger="mount"
-              delay={0.08}
-              className="text-4xl font-extrabold leading-[1.03] tracking-[-0.05em] sm:text-6xl lg:text-[4.35rem]"
-            />
-          </div>
+          <motion.h1
+            initial={reduceMotion ? false : { opacity: 0, y: 26, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.75, delay: reduceMotion ? 0 : 0.06, ease: motionTokens.ease }}
+            className="mx-auto mt-5 max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-[-0.06em] sm:text-6xl lg:text-[4.9rem]"
+          >
+            {c.title}
+          </motion.h1>
 
           <motion.p
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.18, ease: motionTokens.ease }}
-            className="mx-auto mt-6 max-w-2xl text-base leading-7 text-vx-muted sm:text-lg sm:leading-8"
+            className="mx-auto mt-6 max-w-3xl text-base leading-7 text-vx-muted sm:text-lg sm:leading-8"
           >
             {c.body}
           </motion.p>
 
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.28, ease: motionTokens.ease }}
             className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
           >
-            <Button onClick={openConsultation} size="lg" data-magnetic="true">
-              {c.primary}
-              <ArrowRight size={18} aria-hidden />
+            <Button onClick={openConsultation} size="lg">
+              {c.primary}<ArrowRight size={18} aria-hidden="true" />
             </Button>
-            <Button href="/services" variant="secondary" size="lg" data-magnetic="true">
-              {c.secondary}
-            </Button>
+            <Button href="/services" variant="secondary" size="lg">{c.secondary}</Button>
           </motion.div>
         </div>
 
-        {/* Connected-system visual (un-boxed, centered below the lead) */}
-        <div ref={ref} className="relative mx-auto mt-14 w-full max-w-[760px] sm:mt-16">
-          <motion.div style={{ y: stageY }} className="will-change-transform">
-            <div ref={tiltRef} className="hero-tilt">
-            <motion.div
-              key={run}
-              className="hero-system-stage hero-system-stage--open"
-              initial={reduceMotion ? false : { opacity: 0, scale: 0.975, y: 18 }}
-              animate={play ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.975, y: 18 }}
-              transition={{ duration: 0.7, ease: motionTokens.ease }}
-            >
-              <svg className="absolute inset-0 h-full w-full" viewBox="0 0 684 540" aria-hidden="true">
-                <defs>
-                  <linearGradient id="hero-path-premium" x1="0" y1="0" x2="1" y2="1">
-                    <stop stopColor="#0ea5e9" stopOpacity="0.15" />
-                    <stop offset="0.55" stopColor="#22d3ee" stopOpacity="0.86" />
-                    <stop offset="1" stopColor="#cbd5e1" stopOpacity="0.16" />
-                  </linearGradient>
-                </defs>
-                {paths.map((d, index) => (
-                  <g key={d}>
-                    <path d={d} fill="none" stroke="rgba(34,211,238,.08)" strokeWidth="5" />
-                    <motion.path
-                      d={d}
-                      fill="none"
-                      stroke="url(#hero-path-premium)"
-                      strokeWidth="2"
-                      initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-                      animate={play ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                      transition={{ duration: 0.8, delay: reduceMotion ? 0 : 0.42 + index * 0.08, ease: motionTokens.ease }}
-                    />
-                  </g>
-                ))}
-                {/* Flowing data pulses: each dot travels its connection into the core */}
-                {!reduceMotion
-                  ? paths.map((d, index) => (
-                      <circle key={`pulse-${d}`} className="hero-pulse" r="3.2" fill="#22d3ee">
-                        <animateMotion
-                          dur="2.6s"
-                          begin={`${0.7 + index * 0.14}s`}
-                          repeatCount="indefinite"
-                          path={d}
-                          keyPoints="0;1"
-                          keyTimes="0;1"
-                          calcMode="spline"
-                          keySplines="0.4 0 0.2 1"
-                        />
-                      </circle>
-                    ))
-                  : null}
-              </svg>
+        <motion.div
+          ref={visualRef}
+          initial={reduceMotion ? false : { opacity: 0, y: 50, scale: 0.965 }}
+          animate={inView || reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.965 }}
+          transition={{ duration: 0.9, delay: reduceMotion ? 0 : 0.18, ease: motionTokens.ease }}
+          className="vx-dashboard-wrap relative mx-auto mt-14 max-w-6xl"
+        >
+          <div className="vx-dashboard-beam vx-dashboard-beam-left" aria-hidden="true" />
+          <div className="vx-dashboard-beam vx-dashboard-beam-right" aria-hidden="true" />
 
-              {c.modules.map((label, index) => {
-                const Icon = moduleIcons[index]!;
-                return (
-                  <motion.div
-                    key={label}
-                    className={`hero-module ${modulePositions[index]}`}
-                    initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 10 }}
-                    animate={play ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.94, y: 10 }}
-                    transition={{ duration: 0.42, delay: reduceMotion ? 0 : 0.16 + index * 0.055, ease: motionTokens.ease }}
-                  >
-                    <span className="hero-module-icon">
-                      <Icon size={17} aria-hidden />
-                    </span>
-                    <span>{label}</span>
-                    <motion.span
-                      className="hero-module-status"
-                      aria-hidden
-                      animate={reduceMotion ? undefined : { opacity: [0.45, 1, 0.45], scale: [0.9, 1.08, 0.9] }}
-                      transition={{ duration: 3.6, repeat: Infinity, delay: index * 0.18 }}
-                    />
-                  </motion.div>
-                );
-              })}
+          <div className="vx-capability-row" aria-label={lang === "es" ? "Capacidades conectadas" : "Connected capabilities"}>
+            {c.labels.map((label, index) => {
+              const Icon = labelIcons[index]!;
+              return (
+                <motion.div
+                  key={label}
+                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                  animate={inView || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                  transition={{ duration: 0.38, delay: reduceMotion ? 0 : 0.42 + index * 0.07 }}
+                  className="vx-capability-pill"
+                >
+                  <Icon size={15} aria-hidden="true" />
+                  <span>{label}</span>
+                </motion.div>
+              );
+            })}
+          </div>
 
-              <motion.div
-                className="hero-core"
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.82 }}
-                animate={play ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.82 }}
-                transition={{ duration: 0.72, delay: reduceMotion ? 0 : 0.56, ease: motionTokens.ease }}
-              >
-                <motion.span
-                  className="hero-core-ring"
-                  aria-hidden
-                  animate={reduceMotion ? undefined : { rotate: 360 }}
-                  transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-                />
-                <span className="hero-core-mark">
-                  <Workflow size={30} aria-hidden />
-                </span>
-                <strong>VYNTEX</strong>
-                <small>{c.connected}</small>
-              </motion.div>
-
-              <motion.div
-                className="hero-inquiry"
-                initial={reduceMotion ? false : { opacity: 0, x: -12 }}
-                animate={play ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
-                transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.36 }}
-              >
-                <Globe2 size={14} aria-hidden />
-                {c.inquiry}
-              </motion.div>
-            </motion.div>
+          <div className="vx-dashboard-shell">
+            <div className="vx-dashboard-topbar">
+              <div className="flex items-center gap-3">
+                <span className="vx-dashboard-logo"><LayoutDashboard size={18} aria-hidden="true" /></span>
+                <div>
+                  <strong>{c.dashboard}</strong>
+                  <small>{c.status}</small>
+                </div>
+              </div>
+              <span className="vx-live-indicator"><i />LIVE</span>
             </div>
-          </motion.div>
 
-          {!reduceMotion ? (
-            <button
-              type="button"
-              onClick={() => setRun((value) => value + 1)}
-              className="mx-auto mt-4 flex items-center gap-2 rounded-full px-3 py-2 text-xs text-vx-muted transition-colors hover:text-vx-ink"
-              aria-label={c.replay}
-            >
-              <RefreshCw size={14} aria-hidden />
-              {c.replay}
-            </button>
-          ) : null}
-        </div>
+            <div className="vx-dashboard-grid">
+              <aside className="vx-dashboard-sidebar" aria-hidden="true">
+                {[LayoutDashboard, Users, CalendarDays, CreditCard, BarChart3].map((Icon, index) => (
+                  <motion.span
+                    key={index}
+                    className={index === 0 ? "active" : ""}
+                    animate={reduceMotion ? undefined : index === 0 ? { boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.2)", "0 0 0 rgba(34,211,238,0)"] } : undefined}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  ><Icon size={17} /></motion.span>
+                ))}
+              </aside>
+
+              <div className="vx-dashboard-main">
+                <div className="vx-metric-row">
+                  {[c.lead, c.customer, c.appointment, c.payment].map((label, index) => (
+                    <motion.div
+                      key={label}
+                      className="vx-metric-card"
+                      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                      animate={inView || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                      transition={{ duration: 0.42, delay: reduceMotion ? 0 : 0.65 + index * 0.11 }}
+                    >
+                      <span>{index === 0 ? <Globe2 size={15} /> : index === 1 ? <Users size={15} /> : index === 2 ? <CalendarDays size={15} /> : <CreditCard size={15} />}</span>
+                      <small>{label}</small>
+                      <CheckCircle2 size={14} className="text-vx-cyan" />
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="vx-dashboard-content">
+                  <div className="vx-flow-panel">
+                    <div className="vx-panel-heading"><span>{lang === "es" ? "Flujo del cliente" : "Customer workflow"}</span><Workflow size={17} /></div>
+                    <div className="vx-flow-track" aria-hidden="true">
+                      {[Globe2, Users, BellRing, CalendarDays, FileText, CreditCard].map((Icon, index) => (
+                        <div key={index} className="vx-flow-node-wrap">
+                          <motion.span
+                            className="vx-flow-node"
+                            animate={reduceMotion ? undefined : { borderColor: ["rgba(14,165,233,.18)", "rgba(34,211,238,.75)", "rgba(14,165,233,.18)"], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 22px rgba(34,211,238,.23)", "0 0 0 rgba(34,211,238,0)"] }}
+                            transition={{ duration: 3.6, repeat: Infinity, delay: index * 0.42 }}
+                          ><Icon size={17} /></motion.span>
+                          {index < 5 ? <span className="vx-flow-line"><motion.i animate={reduceMotion ? undefined : { x: ["-120%", "180%"] }} transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35, ease: "linear" }} /></span> : null}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="vx-activity-list">
+                      {[c.lead, c.customer, c.appointment].map((item, index) => (
+                        <motion.div key={item} initial={reduceMotion ? false : { opacity: 0, x: -10 }} animate={inView || reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }} transition={{ delay: reduceMotion ? 0 : 1.05 + index * 0.14 }}>
+                          <span className="vx-activity-dot" /><span>{item}</span><small>{index === 0 ? "Now" : index === 1 ? "+1s" : "+2s"}</small>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="vx-insight-panel">
+                    <div className="vx-panel-heading"><span>{lang === "es" ? "Visibilidad operativa" : "Operational visibility"}</span><TrendingUp size={17} /></div>
+                    <svg viewBox="0 0 320 170" className="vx-chart" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="vx-chart-fill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0" stopColor="#22d3ee" stopOpacity=".28" />
+                          <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M8 132 C44 126 46 88 83 102 S133 135 159 82 S214 96 239 52 S282 76 312 25 L312 165 L8 165 Z" fill="url(#vx-chart-fill)" />
+                      <motion.path d="M8 132 C44 126 46 88 83 102 S133 135 159 82 S214 96 239 52 S282 76 312 25" fill="none" stroke="#22d3ee" strokeWidth="3" initial={reduceMotion ? false : { pathLength: 0 }} animate={inView || reduceMotion ? { pathLength: 1 } : { pathLength: 0 }} transition={{ duration: 1.4, delay: reduceMotion ? 0 : 1.05, ease: motionTokens.ease }} />
+                    </svg>
+                    <div className="vx-insight-tags"><span>CRM</span><span>{lang === "es" ? "Citas" : "Appointments"}</span><span>{lang === "es" ? "Pagos" : "Payments"}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </Container>
     </section>
   );

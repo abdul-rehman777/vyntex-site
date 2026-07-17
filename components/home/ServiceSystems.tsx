@@ -1,81 +1,106 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Bot, CalendarDays, Check, Globe2, MessageSquareText, Route, Sparkles, Users, Workflow } from "lucide-react";
+import { ArrowRight, Bot, CalendarDays, CheckCircle2, Globe2, Mail, MessageSquareText, Route, Sparkles, TrendingUp, Users, Workflow } from "lucide-react";
 import Container from "@/components/ui/Container";
-import RevealText from "@/components/ui/RevealText";
 import Button from "@/components/ui/Button";
 import { useLang } from "@/context/LanguageContext";
-import { revealVariants, staggerVariants } from "@/components/home/motion";
 
 const copy = {
   en: {
-    eyebrow: "THREE CORE SYSTEMS",
-    title: "The Technology Your Business Uses, Working Together",
-    body: "Start with one system or connect all three around the way your team already works.",
+    eyebrow: "CONNECTED SERVICES",
+    title: "Systems That Work Better Together",
+    body: "Start with the service you need now, then connect more as your business grows.",
     cta: "Explore Services",
     cards: [
-      { title: "CRM and Operations", body: "Organize customer records, pipelines, appointments, tasks, files, and team activity.", labels: ["Inquiry captured", "Record created", "Task linked"] },
-      { title: "Automation and Communication", body: "Automate messages, reminders, assignments, follow-up, intake, and internal notifications.", labels: ["Trigger detected", "Message sent", "Follow-up scheduled"] },
-      { title: "Web, Marketing, and AI", body: "Capture leads, connect campaigns, improve customer journeys, and use practical AI where it adds value.", labels: ["Form submitted", "Source recorded", "Inquiry categorized"] },
+      { tag: "CRM & OPERATIONS", title: "Organize Customers and Daily Work", body: "Connect records, pipelines, appointments, tasks, files, and team activity.", labels: ["Lead received", "Record created", "Task assigned"] },
+      { tag: "AUTOMATION & COMMUNICATION", title: "Automate Follow-Up and Service", body: "Send messages, reminders, assignments, intake requests, and updates automatically.", labels: ["Rule triggered", "Message sent", "Reminder scheduled"] },
+      { tag: "WEB, MARKETING & AI", title: "Capture and Qualify Better Leads", body: "Connect your website, campaigns, forms, and practical AI to the customer journey.", labels: ["Form submitted", "Source captured", "Lead categorized"] },
     ],
   },
   es: {
-    eyebrow: "TRES SISTEMAS PRINCIPALES",
-    title: "La Tecnología de su Negocio, Trabajando en Conjunto",
-    body: "Comience con un sistema o conecte los tres según la forma en que ya trabaja su equipo.",
+    eyebrow: "SERVICIOS CONECTADOS",
+    title: "Sistemas que Funcionan Mejor Juntos",
+    body: "Comience con el servicio que necesita hoy y conecte más a medida que su negocio crece.",
     cta: "Explorar Servicios",
     cards: [
-      { title: "CRM y Operaciones", body: "Organice clientes, procesos, citas, tareas, archivos y actividad del equipo.", labels: ["Consulta captada", "Registro creado", "Tarea vinculada"] },
-      { title: "Automatización y Comunicación", body: "Automatice mensajes, recordatorios, asignaciones, seguimiento, admisión y avisos internos.", labels: ["Activador detectado", "Mensaje enviado", "Seguimiento programado"] },
-      { title: "Web, Marketing e IA", body: "Capte prospectos, conecte campañas, mejore la experiencia y use IA cuando aporte valor.", labels: ["Formulario enviado", "Fuente registrada", "Consulta clasificada"] },
+      { tag: "CRM Y OPERACIONES", title: "Organice Clientes y Trabajo Diario", body: "Conecte registros, procesos, citas, tareas, archivos y actividad del equipo.", labels: ["Prospecto recibido", "Registro creado", "Tarea asignada"] },
+      { tag: "AUTOMATIZACIÓN Y COMUNICACIÓN", title: "Automatice Seguimiento y Servicio", body: "Envíe mensajes, recordatorios, asignaciones, solicitudes y actualizaciones automáticamente.", labels: ["Regla activada", "Mensaje enviado", "Recordatorio programado"] },
+      { tag: "WEB, MARKETING E IA", title: "Capte y Califique Mejores Prospectos", body: "Conecte su web, campañas, formularios e IA práctica al recorrido del cliente.", labels: ["Formulario enviado", "Fuente captada", "Prospecto clasificado"] },
     ],
   },
 } as const;
 
-const mainIcons = [Users, Workflow, Sparkles] as const;
-const flowIcons = [[Globe2, Users, CalendarDays], [Route, MessageSquareText, CalendarDays], [Globe2, Bot, Users]] as const;
+const cardIcons = [Users, Workflow, Sparkles] as const;
+const flowIcons = [[Globe2, Users, CalendarDays], [Route, MessageSquareText, Mail], [Globe2, TrendingUp, Bot]] as const;
 
 export default function ServiceSystems() {
   const { lang } = useLang();
   const c = copy[lang];
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() === true;
+
   return (
-    <section id="services" className="py-16 sm:py-20">
+    <section id="services" className="py-16 sm:py-24">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
-          <RevealText as="h2" text={c.title} className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl" />
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-vx-cyan">{c.eyebrow}</p>
+          <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
         </div>
-        <motion.div className="mt-10 grid gap-5 lg:grid-cols-3" variants={staggerVariants} initial={reduceMotion ? "visible" : "hidden"} whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+
+        <div className="mt-12 space-y-7">
           {c.cards.map((card, index) => {
-            const Icon = mainIcons[index]!;
-            const MiniIcons = flowIcons[index]!;
+            const Icon = cardIcons[index]!;
+            const mini = flowIcons[index]!;
+            const reverse = index % 2 === 1;
             return (
-              <motion.article key={card.title} variants={revealVariants} className="system-card">
-                <div className="flex items-center gap-3"><span className="system-card-icon"><Icon size={21} aria-hidden /></span><h3 className="text-xl font-bold">{card.title}</h3></div>
-                <p className="mt-4 text-sm leading-6 text-vx-muted">{card.body}</p>
-                <div className="mt-6 rounded-xl border border-vx-line bg-vx-bg/70 p-4">
-                  <div className="flex items-center justify-between gap-2">
+              <motion.article
+                key={card.title}
+                className={`vx-service-story ${reverse ? "vx-service-story-reverse" : ""}`}
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.22 }}
+                transition={{ duration: 0.58 }}
+              >
+                <div className="vx-service-copy">
+                  <span className="vx-service-tag">{card.tag}</span>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </div>
+
+                <div className="vx-service-demo">
+                  <div className="vx-demo-header"><span><Icon size={17} />VYNTEX</span><small>{lang === "es" ? "Sistema activo" : "System active"}</small></div>
+                  <div className="vx-demo-flow">
                     {card.labels.map((label, flowIndex) => {
-                      const MiniIcon = MiniIcons[flowIndex]!;
+                      const MiniIcon = mini[flowIndex]!;
                       return (
-                        <div key={label} className="min-w-0 flex-1 text-center">
-                          <motion.span className="mx-auto grid h-9 w-9 place-items-center rounded-lg border border-vx-blue/25 bg-vx-blue/10 text-vx-cyan" whileInView={reduceMotion ? undefined : { scale: [0.92, 1.04, 1] }} transition={{ delay: flowIndex * 0.18 }} viewport={{ once: true }}><MiniIcon size={16} aria-hidden /></motion.span>
-                          <span className="mt-2 block text-[0.68rem] leading-4 text-vx-muted">{label}</span>
-                          {flowIndex < card.labels.length - 1 ? <span className="system-mini-line" aria-hidden /> : null}
+                        <div key={label} className="vx-demo-step">
+                          <motion.span
+                            animate={reduceMotion ? undefined : { y: [0, -3, 0], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.18)", "0 0 0 rgba(34,211,238,0)"] }}
+                            transition={{ duration: 4.2, repeat: Infinity, delay: flowIndex * 0.55 }}
+                          ><MiniIcon size={17} /></motion.span>
+                          <strong>{label}</strong>
+                          <CheckCircle2 size={14} className="text-vx-cyan" />
+                          {flowIndex < card.labels.length - 1 ? <i><motion.b animate={reduceMotion ? undefined : { x: ["-100%", "180%"] }} transition={{ duration: 2.9, repeat: Infinity, delay: flowIndex * 0.5, ease: "linear" }} /></i> : null}
                         </div>
                       );
                     })}
                   </div>
-                  <div className="mt-4 flex items-center gap-2 text-xs text-vx-silver"><Check size={14} className="text-vx-cyan" aria-hidden />Connected and ready</div>
+                  <div className="vx-demo-console">
+                    <span />
+                    <div>
+                      <small>{lang === "es" ? "Automatización verificada" : "Automation verified"}</small>
+                      <strong>{lang === "es" ? "Flujo sincronizado" : "Workflow synchronized"}</strong>
+                    </div>
+                    <ArrowRight size={17} />
+                  </div>
                 </div>
               </motion.article>
             );
           })}
-        </motion.div>
-        <div className="mt-8 text-center"><Button href="/services" variant="secondary">{c.cta}</Button></div>
+        </div>
+
+        <div className="mt-9 text-center"><Button href="/services" variant="secondary">{c.cta}</Button></div>
       </Container>
     </section>
   );

@@ -15,15 +15,12 @@ interface AnimatedSectionProps {
   as?: "div" | "li" | "section" | "article";
 }
 
-// Canonical VYNTEX reveal — same curve/duration as the homepage section
-// reveals (components/home/motion.ts) and page transitions (lib/motion.ts)
-// so every entrance across the site shares one rhythm.
 const variants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay },
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay },
   }),
 };
 
