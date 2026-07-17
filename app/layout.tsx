@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
     default:
-      "VYNTEX | All-in-One Business Management Platform",
+      "VYNTEX | Connected Business Systems",
     template: "%s | VYNTEX",
   },
   description:
-    "VYNTEX is an all-in-one business management platform for CRM, customer communication, appointments, payments, automation, portals, reporting, and daily operations.",
+    "VYNTEX connects CRM, communication, automation, scheduling, payments, marketing, reporting, and operations into one organized business system.",
   applicationName: SITE.name,
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
@@ -43,23 +43,23 @@ export const metadata: Metadata = {
     alternateLocale: ["es_US"],
     url: SITE.url,
     siteName: SITE.name,
-    title: "VYNTEX | All-in-One Business Management Platform",
+    title: "VYNTEX | Connected Business Systems",
     description:
-      "Manage customers, communication, appointments, payments, automation, portals, and reporting from one connected platform.",
+      "Connect CRM, communication, automation, scheduling, payments, marketing, reporting, and operations in one organized business system.",
     images: [
       {
         url: SITE.ogImage,
         width: 1200,
         height: 630,
-        alt: "VYNTEX — All-in-One Business Management Platform",
+        alt: "VYNTEX — Connected Business Systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VYNTEX | Business Management Platform",
+    title: "VYNTEX | Connected Business Systems",
     description:
-      "One connected platform for customers, communication, operations, automation, payments, portals, and reporting.",
+      "A premium technology partner for connected CRM, automation, communication, websites, payments, and business operations.",
     images: [SITE.ogImage],
   },
   robots: {

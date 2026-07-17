@@ -23,7 +23,7 @@ const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     primaryNav: "Primary",
-    logoAlt: "VYNTEX — AI Automation, Web Development and Digital Technology",
+    logoAlt: "VYNTEX — Connected Business Systems and Technology Solutions",
   },
 
   actions: {
@@ -53,6 +53,7 @@ const en = {
     caseStudies: "Case Studies",
     about: "About Us",
     partners: "Partners",
+    resources: "Resources",
     faq: "FAQ",
     contact: "Contact",
   },
@@ -1337,7 +1338,7 @@ const es: Dict = {
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
     primaryNav: "Principal",
-    logoAlt: "VYNTEX — Automatización con IA, Desarrollo Web y Tecnología Digital",
+    logoAlt: "VYNTEX — Sistemas Empresariales Conectados y Soluciones Tecnológicas",
   },
 
   actions: {
@@ -1367,6 +1368,7 @@ const es: Dict = {
     caseStudies: "Casos de Éxito",
     about: "Nosotros",
     partners: "Socios",
+    resources: "Recursos",
     faq: "Preguntas Frecuentes",
     contact: "Contacto",
   },

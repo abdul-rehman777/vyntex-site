@@ -8,7 +8,7 @@
 export const SITE = {
   name: "VYNTEX",
   legalName: "VYNTEX",
-  tagline: "AI Automation · Web Development · Digital Technology",
+  tagline: "Connected business systems, CRM implementation, automation, websites, and digital solutions.",
 
   url: "https://vyntexusa.com",
   domain: "vyntexusa.com",
@@ -56,6 +56,7 @@ export const SECTION_IDS = {
   caseStudies: "case-studies",
   about: "about",
   partners: "partners",
+  resources: "resources",
   faq: "faq",
   contact: "contact",
 } as const;
@@ -68,6 +69,7 @@ export const NAV_LINKS: { key: keyof typeof SECTION_IDS; href: string }[] = [
   { key: "industries", href: "/industries" },
   { key: "pricing", href: "/pricing" },
   { key: "partners", href: "/partners" },
+  { key: "resources", href: "/how-it-works" },
   { key: "about", href: "/about" },
   { key: "contact", href: "/contact" },
 ];
