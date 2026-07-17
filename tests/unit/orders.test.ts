@@ -77,8 +77,8 @@ describe("resolveOrder — partner wholesale", () => {
     });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    // $660 partner cost — NOT the $1,100 retail price.
-    expect(result.order.totalCents).toBe(66000);
+    // 30% partner margin: $770 partner cost — NOT the $1,100 retail price.
+    expect(result.order.totalCents).toBe(77000);
   });
 
   it("refuses quote-only wholesale tiers", () => {

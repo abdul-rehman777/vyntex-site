@@ -33,30 +33,28 @@ export interface ResellerTier {
   maintenance?: { cost: Money; resale: Money; profit: Money };
 }
 
+export const RESELLER_MARGIN_PERCENT = 30 as const;
+
 export const RESELLER_PRICING: ResellerTier[] = [
-  // Websites
-  { id: "web-basic", category: "websites", nameKey: "webBasic", cost: "$300", resale: "$500", profit: "$200", maintenance: { cost: "$99", resale: "$149", profit: "$50" } },
-  { id: "web-standard", category: "websites", nameKey: "webStandard", cost: "$660", resale: "$1,100", profit: "$440", maintenance: { cost: "$125", resale: "$189", profit: "$64" } },
-  { id: "web-custom", category: "websites", nameKey: "webCustom", cost: "$1,200+", resale: "$2,000+", profit: "$800+" },
+  // Partner cost is 70% of the suggested resale price, leaving a 30% margin.
+  { id: "web-basic", category: "websites", nameKey: "webBasic", cost: "$350", resale: "$500", profit: "$150", maintenance: { cost: "$104.30", resale: "$149", profit: "$44.70" } },
+  { id: "web-standard", category: "websites", nameKey: "webStandard", cost: "$770", resale: "$1,100", profit: "$330", maintenance: { cost: "$132.30", resale: "$189", profit: "$56.70" } },
+  { id: "web-custom", category: "websites", nameKey: "webCustom", cost: "$1,400+", resale: "$2,000+", profit: "$600+" },
 
-  // AI Tools
-  { id: "ai-simple", category: "ai", nameKey: "aiSimple", cost: "$300", resale: "$500", profit: "$200", maintenance: { cost: "$99", resale: "$149", profit: "$50" } },
-  { id: "ai-standard", category: "ai", nameKey: "aiStandard", cost: "$720", resale: "$1,200", profit: "$480", maintenance: { cost: "$125", resale: "$189", profit: "$64" } },
-  { id: "ai-advanced", category: "ai", nameKey: "aiAdvanced", cost: "$1,200+", resale: "$2,000+", profit: "$800+" },
+  { id: "ai-simple", category: "ai", nameKey: "aiSimple", cost: "$350", resale: "$500", profit: "$150", maintenance: { cost: "$104.30", resale: "$149", profit: "$44.70" } },
+  { id: "ai-standard", category: "ai", nameKey: "aiStandard", cost: "$840", resale: "$1,200", profit: "$360", maintenance: { cost: "$132.30", resale: "$189", profit: "$56.70" } },
+  { id: "ai-advanced", category: "ai", nameKey: "aiAdvanced", cost: "$1,400+", resale: "$2,000+", profit: "$600+" },
 
-  // CRM
-  { id: "crm-basic", category: "crm", nameKey: "crmBasic", cost: "$650", resale: "$1,000", profit: "$350", recurring: { cost: "$99", resale: "$149", profit: "$50" } },
-  { id: "crm-standard", category: "crm", nameKey: "crmStandard", cost: "$1,000", resale: "$1,500", profit: "$500", recurring: { cost: "$149", resale: "$225", profit: "$76" } },
-  { id: "crm-custom", category: "crm", nameKey: "crmCustom", cost: "$4,000+", resale: "$6,000+", profit: "$2,000+" },
+  { id: "crm-basic", category: "crm", nameKey: "crmBasic", cost: "$700", resale: "$1,000", profit: "$300", recurring: { cost: "$104.30", resale: "$149", profit: "$44.70" } },
+  { id: "crm-standard", category: "crm", nameKey: "crmStandard", cost: "$1,050", resale: "$1,500", profit: "$450", recurring: { cost: "$157.50", resale: "$225", profit: "$67.50" } },
+  { id: "crm-custom", category: "crm", nameKey: "crmCustom", cost: "$4,200+", resale: "$6,000+", profit: "$1,800+" },
 
-  // Branding
-  { id: "brand-logo", category: "branding", nameKey: "brandLogo", cost: "$75", resale: "$125", profit: "$50" },
-  { id: "brand-bundle", category: "branding", nameKey: "brandBundle", cost: "$210", resale: "$350", profit: "$140" },
-  { id: "brand-kit", category: "branding", nameKey: "brandKit", cost: "$360", resale: "$600", profit: "$240" },
+  { id: "brand-logo", category: "branding", nameKey: "brandLogo", cost: "$87.50", resale: "$125", profit: "$37.50" },
+  { id: "brand-bundle", category: "branding", nameKey: "brandBundle", cost: "$245", resale: "$350", profit: "$105" },
+  { id: "brand-kit", category: "branding", nameKey: "brandKit", cost: "$420", resale: "$600", profit: "$180" },
 
-  // Social
-  { id: "social-setup", category: "social", nameKey: "socialSetup", cost: "$150", resale: "$250", profit: "$100" },
-  { id: "social-mgmt", category: "social", nameKey: "socialMgmt", cost: "$99", resale: "$149", profit: "$50" },
+  { id: "social-setup", category: "social", nameKey: "socialSetup", cost: "$175", resale: "$250", profit: "$75" },
+  { id: "social-mgmt", category: "social", nameKey: "socialMgmt", cost: "$104.30", resale: "$149", profit: "$44.70" },
 ];
 
 export function findResellerTier(id: string): ResellerTier | undefined {
