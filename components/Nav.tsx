@@ -114,9 +114,7 @@ export default function Nav() {
   const Wordmark = (
     <Link
       href="/"
-      // shrink-0 is load-bearing: without it flex shrinks the logo past its
-      // content and it collides with the first nav link.
-      className="flex shrink-0 items-center gap-2.5"
+      className="flex shrink-0 items-center gap-2.5 group"
       aria-label={SITE.name}
       onClick={() => setOpen(false)}
     >
@@ -128,8 +126,9 @@ export default function Nav() {
         priority
         className="h-9 w-auto shrink-0"
       />
-      <span className="whitespace-nowrap text-lg font-bold tracking-tight vx-grad-text">
+      <span className="relative overflow-hidden whitespace-nowrap text-lg font-bold tracking-tight vx-grad-text">
         VYNTEX
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_2s_ease-out_forwards]" style={{ animationDelay: '0.5s' }} />
       </span>
     </Link>
   );

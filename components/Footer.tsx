@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { SITE, CONTACT_HREFS, LEGAL_LINKS } from "@/lib/site";
@@ -9,9 +10,11 @@ import Container from "@/components/ui/Container";
 import LanguageToggle from "@/components/ui/LanguageToggle";
 import Button from "@/components/ui/Button";
 import { openConsultation } from "@/components/BookConsultation";
+import { useVyntexMotion } from "@/lib/motion";
 
 export default function Footer() {
   const { t, lang } = useLang();
+  const { shouldReduceMotion } = useVyntexMotion();
   const year = new Date().getFullYear();
 
   const words = lang === "es" ? {
@@ -31,8 +34,16 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-vx-line bg-vx-bg2/70">
-      <Container className="py-12 sm:py-14">
+    <footer className="relative border-t border-vx-line bg-vx-bg2/70 overflow-hidden">
+      {/* Quiet animated connection motif */}
+      {!shouldReduceMotion && (
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-vx-cyan to-transparent opacity-20 pointer-events-none"
+          animate={{ x: ["-100%", "100%"] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+      )}
+      <Container className="relative z-10 py-12 sm:py-14">
         <div className="mb-10 flex flex-col gap-5 rounded-2xl border border-vx-blue/25 bg-vx-blue/[0.06] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <h2 className="text-2xl font-bold">{words.ctaTitle}</h2>
