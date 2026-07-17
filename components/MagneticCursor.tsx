@@ -2,71 +2,71 @@
 
 import { useEffect, useRef } from "react";
 
+const INTERACTIVE_SELECTOR =
+  "a,button,input,textarea,select,[role='button'],[role='tab'],[data-magnetic]";
+
 export default function MagneticCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!fine.matches || reduced.matches) return;
+    const finePointer = window.matchMedia("(pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    if (!finePointer.matches || reducedMotion.matches) return;
 
-    document.documentElement.classList.add("vx-cursor-enabled");
+    const cursor = cursorRef.current;
+    if (!cursor) return;
 
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let ringX = mouseX;
-    let ringY = mouseY;
-    let raf = 0;
+    let frame = 0;
+    let x = -100;
+    let y = -100;
 
-    const render = () => {
-      ringX += (mouseX - ringX) * 0.16;
-      ringY += (mouseY - ringY) * 0.16;
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-      raf = requestAnimationFrame(render);
+    const paint = () => {
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      frame = 0;
     };
 
     const onMove = (event: PointerEvent) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      dot.dataset.visible = "true";
-      ring.dataset.visible = "true";
+      x = event.clientX;
+      y = event.clientY;
+      cursor.dataset.visible = "true";
+
+      if (!frame) frame = requestAnimationFrame(paint);
     };
 
     const onOver = (event: PointerEvent) => {
       const target = event.target as HTMLElement | null;
-      const interactive = target?.closest("a,button,input,textarea,select,[role='button'],[role='tab'],[data-magnetic]");
-      ring.dataset.active = interactive ? "true" : "false";
+      cursor.dataset.active = target?.closest(INTERACTIVE_SELECTOR) ? "true" : "false";
+    };
+
+    const onDown = () => {
+      cursor.dataset.pressed = "true";
+    };
+
+    const onUp = () => {
+      cursor.dataset.pressed = "false";
     };
 
     const onLeave = () => {
-      dot.dataset.visible = "false";
-      ring.dataset.visible = "false";
+      cursor.dataset.visible = "false";
+      cursor.dataset.active = "false";
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerover", onOver, { passive: true });
+    window.addEventListener("pointerdown", onDown, { passive: true });
+    window.addEventListener("pointerup", onUp, { passive: true });
     document.addEventListener("mouseleave", onLeave);
-    raf = requestAnimationFrame(render);
 
     return () => {
-      cancelAnimationFrame(raf);
-      document.documentElement.classList.remove("vx-cursor-enabled");
+      if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerover", onOver);
+      window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointerup", onUp);
       document.removeEventListener("mouseleave", onLeave);
     };
   }, []);
 
-  return (
-    <>
-      <div ref={ringRef} className="vx-cursor-ring" aria-hidden="true" />
-      <div ref={dotRef} className="vx-cursor-dot" aria-hidden="true" />
-    </>
-  );
+  return <div ref={cursorRef} className="vx-cursor" aria-hidden="true"><span /></div>;
 }

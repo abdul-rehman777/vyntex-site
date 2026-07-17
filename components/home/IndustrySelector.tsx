@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Building2, CalendarCheck2, FileText, ReceiptText, UserRoundCheck, Workflow } from "lucide-react";
 import Container from "@/components/ui/Container";
+import ScrollReveal from "@/components/home/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { useLang } from "@/context/LanguageContext";
 
@@ -63,11 +64,11 @@ export default function IndustrySelector() {
   return (
     <section id="industries" className="border-y border-vx-line bg-vx-bg2/35 py-16 sm:py-20">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
-        </div>
+        </ScrollReveal>
         <div className="mt-9 grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
           <div role="tablist" aria-label={c.title} className="industry-tabs">
             {c.industries.map(([name], index) => (

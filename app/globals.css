@@ -1060,3 +1060,118 @@
   .vx-live-indicator i { animation:none !important; }
   .vx-dashboard-shell { transform:none; }
 }
+
+/* --------------------------------------------------------------------------
+   Final clarity and performance polish
+   -------------------------------------------------------------------------- */
+.vx-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  pointer-events: none;
+  opacity: 0;
+  border: 1px solid rgba(34, 211, 238, 0.72);
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.055);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.14), inset 0 0 10px rgba(34, 211, 238, 0.06);
+  transform: translate3d(-100px, -100px, 0);
+  transition: width 120ms ease, height 120ms ease, margin 120ms ease, opacity 100ms ease, border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+  will-change: transform;
+  contain: layout paint style;
+}
+
+.vx-cursor > span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: inherit;
+  background: var(--vx-cyan);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.78);
+  transform: translate(-50%, -50%);
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.vx-cursor[data-visible="true"] { opacity: 1; }
+.vx-cursor[data-active="true"] {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-color: rgba(56, 189, 248, 0.9);
+  background: rgba(14, 165, 233, 0.1);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.2), inset 0 0 14px rgba(34, 211, 238, 0.08);
+}
+.vx-cursor[data-active="true"] > span { transform: translate(-50%, -50%) scale(.72); }
+.vx-cursor[data-pressed="true"] { width: 16px; height: 16px; margin: -8px 0 0 -8px; }
+
+/* Keep the native cursor. The visual follower is supplemental and therefore
+   remains fast, familiar, and accessible. */
+.vx-cursor-ring,
+.vx-cursor-dot { display: none !important; }
+
+.vx-outcome-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .42rem .65rem;
+  border: 1px solid rgba(34, 211, 238, .16);
+  border-radius: 999px;
+  color: var(--vx-silver);
+  background: rgba(10, 13, 31, .64);
+  font-size: .68rem;
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+}
+.vx-outcome-chip svg { color: var(--vx-cyan); }
+
+/* Scroll storytelling: content resolves from information to outcome without
+   exaggerated motion or layout shifts. */
+.vx-service-story {
+  content-visibility: auto;
+  contain-intrinsic-size: 560px;
+}
+.vx-service-copy,
+.vx-service-demo,
+.comparison-panel,
+.process-card,
+.industry-panel,
+.final-system-cta {
+  transform-origin: 50% 75%;
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vx-service-demo,
+  .comparison-panel-after,
+  .process-card,
+  .industry-panel {
+    transition: transform 220ms cubic-bezier(.22,1,.36,1), border-color 220ms ease, box-shadow 220ms ease;
+  }
+  .vx-service-demo:hover,
+  .comparison-panel-after:hover,
+  .process-card:hover,
+  .industry-panel:hover {
+    transform: translateY(-3px);
+    border-color: rgba(34,211,238,.24);
+    box-shadow: 0 18px 50px rgba(0,0,0,.22), 0 0 34px rgba(14,165,233,.06);
+  }
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .vx-cursor { display: none !important; }
+  .vx-outcome-chip { font-size: .62rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vx-cursor { display: none !important; }
+  .vx-service-copy,
+  .vx-service-demo,
+  .comparison-panel,
+  .process-card,
+  .industry-panel,
+  .final-system-cta { will-change: auto; }
+}

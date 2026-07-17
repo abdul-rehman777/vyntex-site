@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Bot, CalendarCheck2, CreditCard, FileText, Globe2, MessageSquareText, Sparkles, Users } from "lucide-react";
 import Container from "@/components/ui/Container";
+import ScrollReveal from "@/components/home/ScrollReveal";
 import { useLang } from "@/context/LanguageContext";
 
 const copy = {
@@ -28,10 +29,10 @@ export default function WorkflowDemo() {
   return (
     <section className="vx-workflow-ribbon border-y border-vx-line py-16 sm:py-20">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
-        </div>
+        </ScrollReveal>
 
         <div className="vx-ribbon-stage mt-10">
           <div className="vx-ribbon-grid" aria-hidden="true" />

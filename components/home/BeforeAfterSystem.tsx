@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, CheckCircle2, CreditCard, Mail, Network, RefreshCcw, Users } from "lucide-react";
 import Container from "@/components/ui/Container";
+import ScrollReveal from "@/components/home/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { openConsultation } from "@/components/BookConsultation";
 import { useLang } from "@/context/LanguageContext";
@@ -39,10 +40,10 @@ export default function BeforeAfterSystem() {
   return (
     <section className="border-y border-vx-line bg-vx-bg2/35 py-16 sm:py-20">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
-        </div>
+        </ScrollReveal>
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           <motion.article className="comparison-panel comparison-panel-before" variants={revealVariants} initial={reduceMotion ? "visible" : "hidden"} whileInView="visible" viewport={{ once: true, amount: 0.25 }}>
             <div className="flex items-center gap-3"><AlertCircle size={20} className="text-vx-muted" aria-hidden /><h3 className="text-xl font-bold">{c.before}</h3></div>

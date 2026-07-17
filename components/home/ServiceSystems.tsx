@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Bot, CalendarDays, CheckCircle2, Globe2, Mail, MessageSquareText, Route, Sparkles, TrendingUp, Users, Workflow } from "lucide-react";
 import Container from "@/components/ui/Container";
+import ScrollReveal from "@/components/home/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { useLang } from "@/context/LanguageContext";
 
@@ -42,11 +43,11 @@ export default function ServiceSystems() {
   return (
     <section id="services" className="py-16 sm:py-24">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-vx-cyan">{c.eyebrow}</p>
           <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
-        </div>
+        </ScrollReveal>
 
         <div className="mt-12 space-y-7">
           {c.cards.map((card, index) => {
@@ -62,13 +63,25 @@ export default function ServiceSystems() {
                 viewport={{ once: true, amount: 0.22 }}
                 transition={{ duration: 0.58 }}
               >
-                <div className="vx-service-copy">
+                <motion.div
+                  className="vx-service-copy"
+                  initial={reduceMotion ? false : { opacity: 0, x: reverse ? 24 : -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ duration: 0.55, delay: 0.08 }}
+                >
                   <span className="vx-service-tag">{card.tag}</span>
                   <h3>{card.title}</h3>
                   <p>{card.body}</p>
-                </div>
+                </motion.div>
 
-                <div className="vx-service-demo">
+                <motion.div
+                  className="vx-service-demo"
+                  initial={reduceMotion ? false : { opacity: 0, x: reverse ? -24 : 24, scale: 0.985 }}
+                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ duration: 0.62, delay: 0.16 }}
+                >
                   <div className="vx-demo-header"><span><Icon size={17} />VYNTEX</span><small>{lang === "es" ? "Sistema activo" : "System active"}</small></div>
                   <div className="vx-demo-flow">
                     {card.labels.map((label, flowIndex) => {
@@ -94,7 +107,7 @@ export default function ServiceSystems() {
                     </div>
                     <ArrowRight size={17} />
                   </div>
-                </div>
+                </motion.div>
               </motion.article>
             );
           })}

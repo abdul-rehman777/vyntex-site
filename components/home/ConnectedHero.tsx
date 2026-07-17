@@ -37,6 +37,7 @@ const copy = {
     customer: "Customer record created",
     appointment: "Appointment confirmed",
     payment: "Payment recorded",
+    outcomes: ["Fewer disconnected tools", "Less manual follow-up", "One complete customer history"],
   },
   es: {
     eyebrow: "SISTEMAS EMPRESARIALES CONECTADOS",
@@ -51,6 +52,7 @@ const copy = {
     customer: "Registro de cliente creado",
     appointment: "Cita confirmada",
     payment: "Pago registrado",
+    outcomes: ["Menos herramientas desconectadas", "Menos seguimiento manual", "Un historial completo del cliente"],
   },
 } as const;
 
@@ -101,10 +103,31 @@ export default function ConnectedHero() {
           </motion.p>
 
           <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.25, ease: motionTokens.ease }}
+            className="mt-6 flex flex-wrap justify-center gap-2"
+            aria-label={lang === "es" ? "Resultados principales" : "Primary outcomes"}
+          >
+            {c.outcomes.map((outcome, index) => (
+              <motion.span
+                key={outcome}
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: reduceMotion ? 0 : 0.28 + index * 0.07, duration: 0.35 }}
+                className="vx-outcome-chip"
+              >
+                <CheckCircle2 size={13} aria-hidden="true" />
+                {outcome}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.28, ease: motionTokens.ease }}
-            className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
+            transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.34, ease: motionTokens.ease }}
+            className="mt-7 flex flex-col justify-center gap-3 sm:flex-row"
           >
             <Button onClick={openConsultation} size="lg">
               {c.primary}<ArrowRight size={18} aria-hidden="true" />
