@@ -136,12 +136,6 @@ export default function Nav() {
 
   return (
     <>
-      <a
-  href="#main-content"
-  className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[100] focus-visible:rounded-lg focus-visible:bg-vx-blue focus-visible:px-5 focus-visible:py-3 focus-visible:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
->
-  {t.a11y.skipToContent}
-</a>
       <header
         className={[
           "fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-shadow",
