@@ -1,1 +1,5 @@
-import type{Metadata}from"next";import ProcessPage from"@/components/marketing/ProcessPage";export const metadata:Metadata={title:"How It Works | VYNTEX",description:"See the VYNTEX process for strategy, content, design, development, testing, launch, and support."};export default function Page(){return <ProcessPage/>}
+import { redirect } from "next/navigation";
+
+export default function HowItWorksRedirect() {
+  redirect("/#process");
+}

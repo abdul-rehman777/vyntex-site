@@ -205,7 +205,7 @@ export default function Nav() {
               >
                 <LayoutDashboard size={15} aria-hidden />
                 {/* Label appears only when there is genuinely room for it. */}
-                <span className="hidden 2xl:inline">{t.actions.clientPortal}</span>
+                <span>{t.actions.clientPortal}</span>
               </Link>
               <LogoutButton />
             </>
@@ -217,7 +217,7 @@ export default function Nav() {
               className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[0.8125rem] font-medium text-vx-muted transition-colors hover:text-vx-ink"
             >
               <LogIn size={15} aria-hidden />
-              <span className="hidden 2xl:inline">{t.actions.clientLogin}</span>
+              <span>{t.actions.clientLogin}</span>
             </Link>
           )}
 

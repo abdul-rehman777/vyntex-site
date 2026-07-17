@@ -1,1 +1,5 @@
-import type{Metadata}from"next";import PricingPage from"@/components/marketing/PricingPage";export const metadata:Metadata={title:"Pricing | VYNTEX",description:"Review VYNTEX starting prices for websites, AI automation, CRM systems, branding, and social media services."};export default function Page(){return <PricingPage/>}
+import { redirect } from "next/navigation";
+
+export default function PricingRedirect() {
+  redirect("/services");
+}
