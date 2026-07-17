@@ -24,29 +24,20 @@ test.describe("homepage", () => {
     await expect(focused).toHaveAttribute("href", "#main-content");
   });
 
-  test("every required section anchor exists", async ({ page }) => {
+  test("contains the concise public navigation and key homepage sections", async ({ page }) => {
     await page.goto("/");
-    for (const id of [
-      "home",
-      "services",
-      "how-it-works",
-      "ai-automation",
-      "pricing",
-      "industries",
-      "case-studies",
-      "about",
-      "partners",
-      "faq",
-      "contact",
-    ]) {
+    for (const id of ["home", "services", "industries"]) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
+    }
+    for (const label of ["Services", "Industries", "Partners", "About Us", "Contact"]) {
+      await expect(page.getByRole("link", { name: label, exact: true }).first()).toBeVisible();
     }
   });
 
-  test("clicking About Us updates the URL hash and scrolls", async ({ page }) => {
+  test("clicking About Us opens the About page", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("link", { name: "About Us", exact: true }).first().click();
-    await expect(page).toHaveURL(/#about$/);
+    await expect(page).toHaveURL(/\/about$/);
   });
 
   test("the language toggle switches the whole page to Spanish and persists", async ({

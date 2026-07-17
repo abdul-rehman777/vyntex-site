@@ -14,8 +14,8 @@ test.describe("mobile navigation", () => {
     const drawer = page.locator("#mobile-drawer");
     await expect(drawer).toBeVisible();
 
-    await drawer.getByRole("link", { name: "Pricing", exact: true }).click();
-    await expect(page).toHaveURL(/#pricing$/);
+    await drawer.getByRole("link", { name: "Services", exact: true }).click();
+    await expect(page).toHaveURL(/\/services$/);
     await expect(drawer).toBeHidden();
   });
 
@@ -40,7 +40,7 @@ test.describe("mobile navigation", () => {
 
   test("primary tap targets are at least 44px tall", async ({ page }) => {
     await page.goto("/");
-    const cta = page.getByRole("link", { name: /Get Started|Empezar/i }).first();
+    const cta = page.getByRole("button", { name: /Book Consultation|Reservar una Consulta/i }).first();
     const box = await cta.boundingBox();
     expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
   });

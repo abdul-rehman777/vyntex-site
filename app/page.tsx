@@ -11,7 +11,7 @@ export default function HomePage() {
       <main id="main-content">
         <HomeExperience />
       </main>
-      <Footer />
+      <Footer showCta={false} />
       <BookConsultation />
       <Chatbot />
     </>
