@@ -168,6 +168,16 @@ export default function ConnectedHero() {
                       animate={play ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                       transition={{ duration: 0.8, delay: reduceMotion ? 0 : 0.42 + index * 0.08, ease: motionTokens.ease }}
                     />
+                    {!reduceMotion && play && index < 4 ? (
+                      <circle r="3.5" fill="#67e8f9" opacity="0.95">
+                        <animateMotion
+                          dur={`${3.8 + index * 0.45}s`}
+                          begin={`${0.9 + index * 0.25}s`}
+                          repeatCount="indefinite"
+                          path={d}
+                        />
+                      </circle>
+                    ) : null}
                   </g>
                 ))}
               </svg>

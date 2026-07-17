@@ -92,7 +92,15 @@ export default function ServicesPricingShowcase() {
                 onClick={() => setCategory(cat)}
                 className="services-category-tab"
               >
-                {categoryLabels[cat][lang]}
+                {selected ? (
+                  <motion.span
+                    layoutId="services-active-category"
+                    className="services-category-active"
+                    transition={{ type: "spring", stiffness: 360, damping: 32 }}
+                    aria-hidden="true"
+                  />
+                ) : null}
+                <span className="relative z-10">{categoryLabels[cat][lang]}</span>
               </button>
             );
           })}

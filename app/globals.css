@@ -40,7 +40,18 @@
     overflow-x: hidden;
   }
 
-
+  /* Ambient brand glow behind all content. Purely decorative. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(700px 520px at 12% -5%, rgba(14, 165, 233, 0.12), transparent 60%),
+      radial-gradient(640px 520px at 92% 0%, rgba(34, 211, 238, 0.08), transparent 55%),
+      radial-gradient(620px 620px at 50% 108%, rgba(14, 165, 233, 0.07), transparent 60%);
+  }
 
   h1,
   h2,
@@ -396,7 +407,7 @@
   .services-category-tab[aria-selected="true"] {
     border-color: rgba(34, 211, 238, 0.32);
     color: #06111b;
-    background: linear-gradient(135deg, var(--vx-blue) 0%, var(--vx-cyan) 100%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #22d3ee 100%);
     box-shadow: 0 10px 34px rgba(14, 165, 233, 0.2);
   }
 
@@ -429,9 +440,9 @@
   .services-price-card.is-featured {
     border-color: rgba(34, 211, 238, 0.62);
     background:
-      radial-gradient(460px 170px at 50% 100%, rgba(34, 211, 238, 0.11), transparent 78%),
+      radial-gradient(460px 170px at 50% 100%, rgba(139, 92, 246, 0.12), transparent 78%),
       linear-gradient(160deg, rgba(18, 22, 47, 0.98), rgba(8, 10, 25, 0.98));
-    box-shadow: inset 0 1px rgba(255,255,255,.06), 0 0 0 1px rgba(34,211,238,.12), 0 30px 90px rgba(14,165,233,.09);
+    box-shadow: inset 0 1px rgba(255,255,255,.06), 0 0 0 1px rgba(139,92,246,.12), 0 30px 90px rgba(14,165,233,.09);
   }
 
   .services-popular-badge {
@@ -444,14 +455,14 @@
     gap: 0.4rem;
     border-radius: 999px;
     padding: 0.35rem 0.85rem;
-    color: #04111c;
-    background: linear-gradient(135deg, var(--vx-cyan), var(--vx-blue));
+    color: #07111d;
+    background: linear-gradient(135deg, #f9d85f, #f5a524);
     font-family: var(--font-jetbrains-mono);
     font-size: 0.67rem;
     font-weight: 900;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    box-shadow: 0 10px 30px rgba(14,165,233,.22);
+    box-shadow: 0 10px 30px rgba(245,165,36,.22);
   }
 
   .services-support-badge {
@@ -460,10 +471,10 @@
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    border: 1px solid rgba(34, 211, 238, 0.28);
+    border: 1px solid rgba(45, 212, 191, 0.28);
     border-radius: 0.9rem;
-    color: var(--vx-cyan);
-    background: rgba(14, 165, 233, 0.08);
+    color: #5eead4;
+    background: rgba(20, 184, 166, 0.08);
     font-family: var(--font-jetbrains-mono);
     font-size: 0.78rem;
   }
@@ -489,13 +500,13 @@
   }
   .services-price-cta.is-featured {
     border-color: transparent;
-    color: #04111c;
-    background: linear-gradient(135deg, var(--vx-cyan), var(--vx-blue));
-    box-shadow: 0 14px 36px rgba(14, 165, 233, 0.2);
+    color: #07111d;
+    background: linear-gradient(135deg, #f9d85f, #f5a524);
+    box-shadow: 0 14px 36px rgba(245, 165, 36, 0.18);
   }
   .services-price-cta.is-featured:hover {
-    background: linear-gradient(135deg, var(--vx-glow), var(--vx-blue));
-    box-shadow: 0 18px 42px rgba(14, 165, 233, 0.28);
+    background: linear-gradient(135deg, #ffe784, #ffb43d);
+    box-shadow: 0 18px 42px rgba(245, 165, 36, 0.25);
   }
 
   .service-explorer-card {
@@ -565,208 +576,180 @@
   .hero-stage-sheen { display: none; }
 }
 
-/* --------------------------------------------------------------------------
-   VYNTEX site-wide spatial environment
-   -------------------------------------------------------------------------- */
-@layer components {
-  .site-content {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-  }
-
-  .site-atmosphere {
-    --scene-x: 0;
-    --scene-y: 0;
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse at 50% -20%, rgba(14, 165, 233, 0.13), transparent 52%),
-      linear-gradient(180deg, #050714 0%, #070a19 48%, #050714 100%);
-    contain: strict;
-  }
-
-  .site-atmosphere__depth {
-    position: absolute;
-    inset: -12%;
-    perspective: 1100px;
-    transform-style: preserve-3d;
-    transform:
-      translate3d(calc(var(--scene-x) * -10px), calc(var(--scene-y) * -8px), 0)
-      rotateX(calc(var(--scene-y) * -1.2deg))
-      rotateY(calc(var(--scene-x) * 1.2deg));
-    transition: transform 700ms cubic-bezier(.22, 1, .36, 1);
-  }
-
-  .site-atmosphere__grid {
-    position: absolute;
-    left: -12%;
-    right: -12%;
-    bottom: -44%;
-    height: 88%;
-    transform-origin: 50% 100%;
-    background-image:
-      linear-gradient(rgba(14, 165, 233, 0.075) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(14, 165, 233, 0.075) 1px, transparent 1px);
-    background-size: 72px 72px;
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,.78), transparent 82%);
-    mask-image: linear-gradient(to top, rgba(0,0,0,.78), transparent 82%);
-  }
-
-  .site-atmosphere__grid--far {
-    opacity: 0.42;
-    transform: rotateX(67deg) translateZ(-130px) scale(1.18);
-    animation: vx-grid-drift 24s linear infinite;
-  }
-
-  .site-atmosphere__grid--near {
-    opacity: 0.25;
-    background-size: 118px 118px;
-    transform: rotateX(70deg) translateZ(10px) scale(1.04);
-    animation: vx-grid-drift 34s linear infinite reverse;
-  }
-
-  .site-atmosphere__halo {
-    position: absolute;
-    width: 42rem;
-    aspect-ratio: 1;
-    border: 1px solid rgba(34, 211, 238, 0.13);
-    border-radius: 50%;
-    box-shadow:
-      inset 0 0 80px rgba(14, 165, 233, 0.04),
-      0 0 90px rgba(14, 165, 233, 0.04);
-  }
-
-  .site-atmosphere__halo::before,
-  .site-atmosphere__halo::after {
-    content: "";
-    position: absolute;
-    inset: 13%;
-    border: 1px dashed rgba(34, 211, 238, 0.11);
-    border-radius: inherit;
-  }
-
-  .site-atmosphere__halo::after {
-    inset: 30%;
-    border-style: solid;
-    border-color: rgba(203, 213, 225, 0.07);
-  }
-
-  .site-atmosphere__halo--one {
-    top: -25rem;
-    right: -12rem;
-    transform: rotateX(58deg) rotateZ(16deg);
-    animation: vx-orbit 22s ease-in-out infinite alternate;
-  }
-
-  .site-atmosphere__halo--two {
-    left: -26rem;
-    top: 38%;
-    width: 50rem;
-    opacity: 0.55;
-    transform: rotateX(66deg) rotateZ(-18deg);
-    animation: vx-orbit 30s ease-in-out infinite alternate-reverse;
-  }
-
-  .site-atmosphere__beam {
-    position: absolute;
-    width: 58rem;
-    height: 1px;
-    opacity: 0.36;
-    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.55), transparent);
-    filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.22));
-  }
-
-  .site-atmosphere__beam--one {
-    top: 24%;
-    left: 18%;
-    transform: rotate(-13deg) translateZ(80px);
-    animation: vx-beam-breathe 12s ease-in-out infinite;
-  }
-
-  .site-atmosphere__beam--two {
-    right: 8%;
-    bottom: 22%;
-    transform: rotate(18deg) translateZ(-20px);
-    animation: vx-beam-breathe 17s ease-in-out infinite reverse;
-  }
-
-  .site-atmosphere__network {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.72;
-    overflow: visible;
-    transform: translateZ(45px);
-  }
-
-  .site-atmosphere__path {
-    stroke-dasharray: 14 20;
-    animation: vx-data-flow 18s linear infinite;
-  }
-  .site-atmosphere__path--b { animation-duration: 23s; animation-direction: reverse; }
-  .site-atmosphere__path--c { animation-duration: 28s; }
-
-  .site-atmosphere__node {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: vx-node-pulse 6s ease-in-out infinite;
-  }
-  .site-atmosphere__node--b { animation-delay: -2s; }
-  .site-atmosphere__node--c { animation-delay: -4s; }
-
-  .site-atmosphere__vignette {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(5, 7, 20, 0.05), rgba(5, 7, 20, 0.22)),
-      radial-gradient(ellipse at center, transparent 34%, rgba(5, 7, 20, 0.58) 100%);
-  }
+/* Coordinated premium motion layer. Content stays readable before JavaScript. */
+:root {
+  --vx-pointer-x: 50%;
+  --vx-pointer-y: 20%;
 }
 
-@keyframes vx-grid-drift {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 0 144px, 144px 0; }
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--vx-pointer-x) var(--vx-pointer-y), rgba(34, 211, 238, 0.045), transparent 68%);
+  transition: background-position 240ms ease-out;
 }
 
-@keyframes vx-orbit {
-  0% { translate: 0 0; rotate: 0deg; opacity: .42; }
-  100% { translate: 2.5rem 1.5rem; rotate: 7deg; opacity: .7; }
+.vx-motion-ready main section,
+.vx-motion-ready .services-price-card,
+.vx-motion-ready .service-explorer-card,
+.vx-motion-ready .system-card,
+.vx-motion-ready .process-card,
+.vx-motion-ready .industry-panel,
+.vx-motion-ready .final-system-cta {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.992);
 }
 
-@keyframes vx-data-flow {
-  to { stroke-dashoffset: -340; }
+.vx-motion-ready [data-motion-visible="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--vx-reveal-delay, 0ms),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--vx-reveal-delay, 0ms);
 }
 
-@keyframes vx-node-pulse {
-  0%, 100% { scale: .72; opacity: .34; }
-  45% { scale: 1.08; opacity: .82; }
+.vx-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-@keyframes vx-beam-breathe {
-  0%, 100% { opacity: .16; scale: .92 1; }
-  50% { opacity: .44; scale: 1.08 1; }
+.vx-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-115%) skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+  transition: transform 520ms cubic-bezier(.22,1,.36,1);
+}
+
+.vx-button:hover::before { transform: translateX(115%) skewX(-18deg); }
+.vx-button svg { transition: transform 220ms cubic-bezier(.22,1,.36,1); }
+.vx-button:hover svg { transform: translateX(3px); }
+
+.hero-stage-sheen {
+  position: absolute;
+  inset: -30% -40%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 42%, rgba(125,211,252,.055) 50%, transparent 58%);
+  transform: translateX(-28%) rotate(8deg);
+  animation: vx-stage-sheen 14s ease-in-out infinite;
+}
+
+.hero-system-stage {
+  animation: vx-stage-breathe 12s ease-in-out infinite;
+}
+
+.hero-module {
+  transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+}
+.hero-module:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34,211,238,.44);
+  box-shadow: inset 0 1px rgba(255,255,255,.06), 0 20px 46px rgba(0,0,0,.34), 0 0 28px rgba(14,165,233,.09);
+}
+
+.services-category-tab {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.services-category-active {
+  position: absolute;
+  inset: 3px;
+  z-index: 0;
+  border: 1px solid rgba(34,211,238,.34);
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(14,165,233,.22), rgba(34,211,238,.11));
+  box-shadow: inset 0 1px rgba(255,255,255,.05), 0 10px 28px rgba(14,165,233,.08);
+}
+.services-category-tab[aria-selected="true"] {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+.services-price-card,
+.service-explorer-card,
+.system-card,
+.process-card,
+.industry-flow li {
+  will-change: transform;
+  transition:
+    transform 260ms cubic-bezier(.22,1,.36,1),
+    border-color 220ms ease,
+    box-shadow 260ms ease,
+    background-color 220ms ease;
+}
+.services-price-card:hover,
+.service-explorer-card:hover,
+.system-card:hover,
+.process-card:hover,
+.industry-flow li:hover {
+  transform: translate3d(0,-5px,0);
+  border-color: rgba(34,211,238,.32);
+  box-shadow: 0 22px 58px rgba(0,0,0,.26), 0 0 34px rgba(14,165,233,.055);
+}
+
+.workflow-step::after,
+.process-card::after,
+.system-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(115deg, transparent 35%, rgba(34,211,238,.05), transparent 64%);
+  transform: translateX(-120%);
+  transition: transform 720ms cubic-bezier(.22,1,.36,1);
+}
+.workflow-step:hover::after,
+.process-card:hover::after,
+.system-card:hover::after { transform: translateX(120%); }
+
+.industry-tab svg { transition: transform 220ms cubic-bezier(.22,1,.36,1); }
+.industry-tab[aria-selected="true"] svg,
+.industry-tab:hover svg { transform: translateX(4px); }
+
+@keyframes vx-stage-sheen {
+  0%, 24% { transform: translateX(-38%) rotate(8deg); opacity: 0; }
+  34% { opacity: 1; }
+  52% { transform: translateX(38%) rotate(8deg); opacity: .8; }
+  65%, 100% { transform: translateX(38%) rotate(8deg); opacity: 0; }
+}
+
+@keyframes vx-stage-breathe {
+  0%, 100% { box-shadow: inset 0 1px rgba(255,255,255,.04), 0 24px 70px rgba(0,0,0,.3), 0 0 0 rgba(14,165,233,0); }
+  50% { box-shadow: inset 0 1px rgba(255,255,255,.05), 0 28px 78px rgba(0,0,0,.34), 0 0 44px rgba(14,165,233,.055); }
 }
 
 @media (max-width: 767px) {
-  .site-atmosphere__depth {
-    inset: -4%;
-    transform: none;
-  }
-  .site-atmosphere__grid { background-size: 54px 54px; opacity: .22; }
-  .site-atmosphere__halo--one { right: -25rem; top: -20rem; }
-  .site-atmosphere__halo--two { left: -38rem; }
-  .site-atmosphere__network { opacity: .42; }
-  .site-atmosphere__beam { opacity: .18; }
+  body::after { display: none; }
+  .hero-system-stage { animation: none; }
+  .hero-stage-sheen { animation-duration: 18s; }
+  .services-price-card:hover,
+  .service-explorer-card:hover,
+  .system-card:hover,
+  .process-card:hover,
+  .industry-flow li:hover { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-atmosphere__depth { transform: none !important; transition: none !important; }
-  .site-atmosphere *,
-  .site-atmosphere *::before,
-  .site-atmosphere *::after { animation: none !important; }
+  .vx-motion-ready main section,
+  .vx-motion-ready .services-price-card,
+  .vx-motion-ready .service-explorer-card,
+  .vx-motion-ready .system-card,
+  .vx-motion-ready .process-card,
+  .vx-motion-ready .industry-panel,
+  .vx-motion-ready .final-system-cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-stage-sheen,
+  .hero-system-stage { animation: none !important; }
+  .vx-button::before { display: none; }
 }
