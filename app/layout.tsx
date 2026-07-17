@@ -3,7 +3,7 @@ import { inter, jetbrainsMono } from "@/app/fonts";
 import { SITE } from "@/lib/site";
 import { siteJsonLd } from "@/lib/schema";
 import { LanguageProvider } from "@/context/LanguageContext";
-import SiteMotion from "@/components/motion/SiteMotion";
+import SiteAtmosphere from "@/components/SiteAtmosphere";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -92,8 +92,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
       </head>
-      <body className="min-h-screen bg-vx-bg font-sans text-vx-ink antialiased">
-        <LanguageProvider><SiteMotion>{children}</SiteMotion></LanguageProvider>
+      <body className="min-h-screen font-sans text-vx-ink antialiased">
+        <LanguageProvider>
+          <SiteAtmosphere />
+          <div className="site-content">{children}</div>
+        </LanguageProvider>
       </body>
     </html>
   );

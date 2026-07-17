@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useLang } from "@/context/LanguageContext";
 import { servicesByLang, pageCopy } from "@/lib/marketing-content";
 import PageShell from "@/components/marketing/PageShell";
@@ -21,7 +20,6 @@ const serviceOrder = [
 
 export default function ServicesHub() {
   const { lang } = useLang();
-  const reduceMotion = useReducedMotion() === true;
   const copy = pageCopy[lang].services;
   const services = [...servicesByLang[lang]].sort(
     (a, b) => serviceOrder.indexOf(a.slug) - serviceOrder.indexOf(b.slug),
@@ -52,14 +50,7 @@ export default function ServicesHub() {
 
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
-              <motion.article
-                key={service.slug}
-                className="service-explorer-card group"
-                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.46, delay: reduceMotion ? 0 : index * 0.055, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <article key={service.slug} className="service-explorer-card group">
                 <div className="flex items-center justify-between gap-4">
                   <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-vx-cyan">{service.eyebrow}</p>
                   <span className="font-mono text-xs text-vx-muted">{String(index + 1).padStart(2, "0")}</span>
@@ -70,7 +61,7 @@ export default function ServicesHub() {
                   {lang === "en" ? "Explore Service" : "Explorar Servicio"}
                   <ArrowRight size={16} aria-hidden />
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
         </Container>

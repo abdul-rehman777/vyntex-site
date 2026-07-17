@@ -20,7 +20,7 @@ const base =
   "transition-[transform,box-shadow,background-color,border-color,color] duration-200 " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vx-blue focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-vx-bg disabled:opacity-50 disabled:pointer-events-none " +
-  "motion-safe:hover:-translate-y-0.5 whitespace-nowrap vx-button";
+  "motion-safe:hover:-translate-y-0.5 whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
   primary:
