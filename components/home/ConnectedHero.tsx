@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import RevealText from "@/components/ui/RevealText";
 import { openConsultation } from "@/components/BookConsultation";
 import { useLang } from "@/context/LanguageContext";
 import { motionTokens } from "@/components/home/motion";
@@ -76,6 +77,11 @@ export default function ConnectedHero() {
   const [run, setRun] = useState(0);
   const play = reduceMotion || inView;
 
+  // Subtle scroll-linked parallax on the visual stage (Nexaro-style scroll
+  // effect), molded to VYNTEX: GPU transform only, and flat under reduced motion.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const stageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [34, -34]);
+
   const paths = useMemo(
     () => [
       "M120 215 C190 215 230 270 342 270",
@@ -106,14 +112,13 @@ export default function ConnectedHero() {
             </motion.p>
 
             <div className="mt-5 overflow-hidden pb-1">
-              <motion.h1
-                initial={reduceMotion ? false : { opacity: 0, y: 38 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.72, delay: reduceMotion ? 0 : 0.08, ease: motionTokens.ease }}
+              <RevealText
+                as="h1"
+                text={c.title}
+                trigger="mount"
+                delay={0.08}
                 className="text-4xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[4.45rem]"
-              >
-                {c.title}
-              </motion.h1>
+              />
             </div>
 
             <motion.p
@@ -139,6 +144,7 @@ export default function ConnectedHero() {
           </div>
 
           <div ref={ref} className="relative mx-auto w-full max-w-[680px]">
+            <motion.div style={{ y: stageY }} className="will-change-transform">
             <motion.div
               key={run}
               className="hero-system-stage"
@@ -219,6 +225,7 @@ export default function ConnectedHero() {
               >
                 <Globe2 size={14} aria-hidden />{c.inquiry}
               </motion.div>
+            </motion.div>
             </motion.div>
 
             {!reduceMotion ? (

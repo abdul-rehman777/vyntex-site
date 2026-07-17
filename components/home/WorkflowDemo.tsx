@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { BarChart3, CalendarCheck2, CreditCard, FileText, Globe2, LayoutDashboard, MessageSquareText, Users } from "lucide-react";
 import Container from "@/components/ui/Container";
+import RevealText from "@/components/ui/RevealText";
 import { useLang } from "@/context/LanguageContext";
 import { motionTokens, revealVariants, staggerVariants } from "@/components/home/motion";
 
@@ -35,7 +36,7 @@ export default function WorkflowDemo() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
+          <RevealText as="h2" text={c.title} className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl" />
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
         </div>
         <motion.ol ref={ref} className="workflow-track mt-10" variants={staggerVariants} initial={reduceMotion ? "visible" : "hidden"} animate={inView ? "visible" : "hidden"}>

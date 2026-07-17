@@ -222,3 +222,43 @@ reseller margin still 30% (server-only pricing untouched) · hero explains conne
 motion coordinated on one rhythm · not excessive · reduced motion complete · keyboard nav intact ·
 consultation modal intact · no fake proof · no off-brand colors · no generic AI imagery · no motion
 that delays understanding · no performance regression (bundle identical).
+
+---
+
+## Addendum — Nexaro-inspired additions (scroll effects + text reveals)
+
+Requested scope: apply Nexaro's motion vocabulary, molded to VYNTEX, **safe enhancements only —
+scroll effects + text reveals, no new elements**. (Custom cursors, light/dark toggle, and any
+fake-metric/logo sections were rejected as before.)
+
+**Added:**
+- `components/ui/RevealText.tsx` (new) — accessible per-word reveal on the canonical curve
+  `[0.22,1,0.36,1]`. Container carries `aria-label`; word spans are `aria-hidden` (screen readers
+  read the clean string once). Renders plain static text under `prefers-reduced-motion`. It only
+  re-presents the exact string passed to it — no copy added/changed.
+- **Text reveals applied** to the live homepage hero H1 (`ConnectedHero`, plays on mount, replacing
+  the prior single-block masked reveal) and the six homepage section H2s (`WorkflowDemo`,
+  `BeforeAfterSystem`, `IndustrySelector`, `ServiceSystems`, `ImplementationProcess`,
+  `FinalSystemCTA` — previously static, now reveal on scroll-in).
+- **Scroll effect** — a subtle scroll-linked parallax on the homepage hero visual stage via
+  `useScroll`/`useTransform` (±34px, GPU transform only). Flat under reduced motion.
+
+**Performance guard (important):** an initial attempt also applied `RevealText` to `MarketingHero`,
+which pulled framer-motion into the lighter marketing routes and raised `/about` from **254 → 292 kB**
+First Load JS. That was reverted. Text reveals now live **only where framer-motion is already
+loaded** (the homepage), so there is **no bundle regression on marketing pages**.
+
+**Bundle after this addendum:**
+- `/` (homepage): 10 kB → **13.5 kB** route, 289 → **293 kB** First Load (RevealText + scroll hooks;
+  cost localized to the flagship page).
+- `/about`, `/industries`: **254 kB** (unchanged). `/services`: 293 → **295 kB** (already loaded
+  framer-motion). Shared JS: **102 kB** (unchanged).
+
+**Gates:** typecheck PASS (0 errors) · lint PASS (no warnings) · tests **94/94** · `next build` clean.
+
+**Not done here (same honest limitations):** no browser render / Lighthouse in this sandbox — verify
+the word-reveal timing and hero parallax on a preview deploy.
+
+**Marketing-hero reveals (optional follow-up):** if you later want the same headline reveal on
+`/about`, `/services`, etc. without the framer-motion cost, I can ship a CSS + IntersectionObserver
+variant of `RevealText` (no motion library) so those routes stay light. Say the word.

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Bot, CalendarDays, Check, Globe2, MessageSquareText, Route, Sparkles, Users, Workflow } from "lucide-react";
 import Container from "@/components/ui/Container";
+import RevealText from "@/components/ui/RevealText";
 import Button from "@/components/ui/Button";
 import { useLang } from "@/context/LanguageContext";
 import { revealVariants, staggerVariants } from "@/components/home/motion";
@@ -44,7 +45,7 @@ export default function ServiceSystems() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-vx-cyan">{c.eyebrow}</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl">{c.title}</h2>
+          <RevealText as="h2" text={c.title} className="mt-4 text-3xl font-bold tracking-[-0.045em] sm:text-5xl" />
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-vx-muted">{c.body}</p>
         </div>
         <motion.div className="mt-10 grid gap-5 lg:grid-cols-3" variants={staggerVariants} initial={reduceMotion ? "visible" : "hidden"} whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
