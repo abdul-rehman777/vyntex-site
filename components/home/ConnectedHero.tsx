@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -22,6 +22,7 @@ import Button from "@/components/ui/Button";
 import { openConsultation } from "@/components/BookConsultation";
 import { useLang } from "@/context/LanguageContext";
 import { motionTokens } from "@/components/home/motion";
+import { useAdaptiveMotion } from "@/hooks/useAdaptiveMotion";
 
 const copy = {
   en: {
@@ -61,7 +62,7 @@ const labelIcons = [Users, MessageSquareText, CalendarDays, CreditCard, Workflow
 export default function ConnectedHero() {
   const { lang } = useLang();
   const c = copy[lang];
-  const reduceMotion = useReducedMotion() === true;
+  const { prefersReducedMotion: reduceMotion, disableAmbientMotion } = useAdaptiveMotion();
   const visualRef = useRef<HTMLDivElement>(null);
   const inView = useInView(visualRef, { once: true, amount: 0.18 });
 
@@ -85,7 +86,7 @@ export default function ConnectedHero() {
           </motion.p>
 
           <motion.h1
-            initial={reduceMotion ? false : { opacity: 0, y: 26, filter: "blur(8px)" }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.75, delay: reduceMotion ? 0 : 0.06, ease: motionTokens.ease }}
             className="mx-auto mt-5 max-w-4xl text-4xl font-extrabold leading-[1.02] tracking-[-0.06em] sm:text-6xl lg:text-[4.9rem]"
@@ -182,7 +183,7 @@ export default function ConnectedHero() {
                   <motion.span
                     key={index}
                     className={index === 0 ? "active" : ""}
-                    animate={reduceMotion ? undefined : index === 0 ? { boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.2)", "0 0 0 rgba(34,211,238,0)"] } : undefined}
+                    animate={disableAmbientMotion ? undefined : index === 0 ? { boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.2)", "0 0 0 rgba(34,211,238,0)"] } : undefined}
                     transition={{ duration: 4, repeat: Infinity }}
                   ><Icon size={17} /></motion.span>
                 ))}
@@ -213,10 +214,10 @@ export default function ConnectedHero() {
                         <div key={index} className="vx-flow-node-wrap">
                           <motion.span
                             className="vx-flow-node"
-                            animate={reduceMotion ? undefined : { borderColor: ["rgba(14,165,233,.18)", "rgba(34,211,238,.75)", "rgba(14,165,233,.18)"], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 22px rgba(34,211,238,.23)", "0 0 0 rgba(34,211,238,0)"] }}
+                            animate={disableAmbientMotion ? undefined : { borderColor: ["rgba(14,165,233,.18)", "rgba(34,211,238,.75)", "rgba(14,165,233,.18)"], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 22px rgba(34,211,238,.23)", "0 0 0 rgba(34,211,238,0)"] }}
                             transition={{ duration: 3.6, repeat: Infinity, delay: index * 0.42 }}
                           ><Icon size={17} /></motion.span>
-                          {index < 5 ? <span className="vx-flow-line"><motion.i animate={reduceMotion ? undefined : { x: ["-120%", "180%"] }} transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35, ease: "linear" }} /></span> : null}
+                          {index < 5 ? <span className="vx-flow-line"><motion.i animate={disableAmbientMotion ? undefined : { x: ["-120%", "180%"] }} transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35, ease: "linear" }} /></span> : null}
                         </div>
                       ))}
                     </div>

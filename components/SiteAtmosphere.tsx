@@ -15,7 +15,15 @@ export default function SiteAtmosphere() {
 
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const finePointer = window.matchMedia("(pointer: fine)");
-    if (media.matches || !finePointer.matches) return;
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
+    if (
+      media.matches ||
+      !finePointer.matches ||
+      !desktop.matches ||
+      nav.connection?.saveData === true ||
+      (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4)
+    ) return;
 
     let frame = 0;
     const onPointerMove = (event: PointerEvent) => {

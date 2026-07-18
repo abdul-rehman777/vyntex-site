@@ -11,8 +11,9 @@ export default function MagneticCursor() {
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = window.matchMedia("(min-width: 1024px)");
 
-    if (!finePointer.matches || reducedMotion.matches) return;
+    if (!finePointer.matches || !desktop.matches || reducedMotion.matches) return;
 
     const cursor = cursorRef.current;
     if (!cursor) return;

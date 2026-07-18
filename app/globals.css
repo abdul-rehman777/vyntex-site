@@ -1774,3 +1774,81 @@
     transform: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Adaptive performance mode for phones, tablets and constrained devices
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px), (pointer: coarse) {
+  html { scroll-behavior: auto; }
+
+  .site-atmosphere,
+  .vx-cursor,
+  .vx-cursor-ring,
+  .vx-cursor-dot,
+  .vx-dashboard-beam,
+  .vx-hero-lightfield,
+  .hero-system-stage::after {
+    display: none !important;
+  }
+
+  .vx-dashboard-shell,
+  .hero-module,
+  .industry-panel,
+  .vx-journey-shell,
+  .vx-journey-card,
+  .vx-service-demo,
+  .vx-service-story,
+  nav,
+  header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .vx-dashboard-shell,
+  .vx-journey-shell,
+  .vx-service-demo,
+  .comparison-panel,
+  .process-card,
+  .industry-panel {
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24) !important;
+  }
+
+  .vx-dashboard-shell::after,
+  .vx-lightstream,
+  .vx-live-indicator i,
+  .hero-core-ring,
+  .site-atmosphere *,
+  .vx-journey-atmosphere,
+  .vx-journey-grid {
+    animation: none !important;
+  }
+
+  .vx-dashboard-shell,
+  .vx-dashboard-wrap,
+  .vx-journey-shell,
+  .vx-service-story,
+  .comparison-panel,
+  .process-card,
+  .industry-panel {
+    transform: none !important;
+  }
+
+  main > section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: 780px;
+  }
+
+  .vx-customer-journey,
+  #services,
+  #industries {
+    contain: layout paint style;
+  }
+}
+
+@media (max-width: 640px) {
+  .vx-dashboard-grid { min-height: auto !important; }
+  .vx-dashboard-shell { border-radius: 1.25rem !important; }
+  .vx-dashboard-content { gap: 0.75rem !important; }
+  .vx-journey-shell { border-radius: 1.25rem !important; }
+  .vx-journey-card { min-height: auto !important; }
+}

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
   useInView,
-  useReducedMotion,
   type Variants,
 } from "framer-motion";
 import {
@@ -24,6 +23,7 @@ import {
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import { useLang } from "@/context/LanguageContext";
+import { useAdaptiveMotion } from "@/hooks/useAdaptiveMotion";
 
 const copy = {
   en: {
@@ -182,21 +182,21 @@ const panelVariants: Variants = {
 export default function WorkflowDemo() {
   const { lang } = useLang();
   const c = copy[lang];
-  const reduceMotion = useReducedMotion() === true;
+  const { prefersReducedMotion: reduceMotion, lowPowerDevice } = useAdaptiveMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { amount: 0.34, once: false });
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (reduceMotion || !inView || paused) return;
+    if (reduceMotion || lowPowerDevice || !inView || paused || document.hidden) return;
 
     const timer = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % c.stages.length);
     }, 2300);
 
     return () => window.clearInterval(timer);
-  }, [c.stages.length, inView, paused, reduceMotion]);
+  }, [c.stages.length, inView, lowPowerDevice, paused, reduceMotion]);
 
   const activeStage = c.stages[activeIndex]!;
   const progress = useMemo(

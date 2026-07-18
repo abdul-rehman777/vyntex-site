@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Bot, CalendarDays, CheckCircle2, Globe2, Mail, MessageSquareText, Route, Sparkles, TrendingUp, Users, Workflow } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import Button from "@/components/ui/Button";
 import { useLang } from "@/context/LanguageContext";
+import { useAdaptiveMotion } from "@/hooks/useAdaptiveMotion";
 
 const copy = {
   en: {
@@ -38,7 +39,7 @@ const flowIcons = [[Globe2, Users, CalendarDays], [Route, MessageSquareText, Mai
 export default function ServiceSystems() {
   const { lang } = useLang();
   const c = copy[lang];
-  const reduceMotion = useReducedMotion() === true;
+  const { prefersReducedMotion: reduceMotion, disableAmbientMotion } = useAdaptiveMotion();
 
   return (
     <section id="services" className="py-16 sm:py-24">
@@ -89,12 +90,12 @@ export default function ServiceSystems() {
                       return (
                         <div key={label} className="vx-demo-step">
                           <motion.span
-                            animate={reduceMotion ? undefined : { y: [0, -3, 0], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.18)", "0 0 0 rgba(34,211,238,0)"] }}
+                            animate={disableAmbientMotion ? undefined : { y: [0, -3, 0], boxShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 24px rgba(34,211,238,.18)", "0 0 0 rgba(34,211,238,0)"] }}
                             transition={{ duration: 4.2, repeat: Infinity, delay: flowIndex * 0.55 }}
                           ><MiniIcon size={17} /></motion.span>
                           <strong>{label}</strong>
                           <CheckCircle2 size={14} className="text-vx-cyan" />
-                          {flowIndex < card.labels.length - 1 ? <i><motion.b animate={reduceMotion ? undefined : { x: ["-100%", "180%"] }} transition={{ duration: 2.9, repeat: Infinity, delay: flowIndex * 0.5, ease: "linear" }} /></i> : null}
+                          {flowIndex < card.labels.length - 1 ? <i><motion.b animate={disableAmbientMotion ? undefined : { x: ["-100%", "180%"] }} transition={{ duration: 2.9, repeat: Infinity, delay: flowIndex * 0.5, ease: "linear" }} /></i> : null}
                         </div>
                       );
                     })}
